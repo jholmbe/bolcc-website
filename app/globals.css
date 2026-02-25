@@ -4,11 +4,13 @@
   --primary-text: #161512;
   --primary-background: #dad7cd;
   --primary-green: #588157;
+  --hover-green: #98ba97;
 }
 
 @theme inline {
   --color-primary-background: var(--primary-background);
   --color-primary-green: var(--primary-green);
+  --color-hover-green: var(--hover-green);
   --color-primary-text: var(--primary-text);
   --font-sans: var(--font-noto-sans);
 }
