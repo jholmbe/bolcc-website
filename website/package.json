@@ -9,7 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@sanity/image-url": "^2.1.1",
+    "@tailwindcss/typography": "^0.5.20",
     "next": "16.1.4",
+    "next-sanity": "^12.4.5",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
