@@ -2,11 +2,10 @@
 
 :root {
   --primary-text: #161512;
-  --primary-background: #F0EEE6;
-  --primary-green: #588157;
-  --hover-green: #98ba97;
+  --primary-background: #ECE6DE;
+  --primary-green: #498C8A;
+  --hover-green: #8fc9c7;
 }
-
 @theme inline {
   --color-primary-background: var(--primary-background);
   --color-primary-green: var(--primary-green);

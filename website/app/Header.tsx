@@ -57,7 +57,7 @@ export default function Header() {
   }, [menuOpen]);
 
   return (
-    <header className="relative z-50 border-b-2 border-stone-300 bg-primary-background">
+    <header className="relative z-50 border-b border-stone-300 bg-primary-background">
       <div className="relative z-50 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 text-primary-text font-semibold tracking-tight">
         <Link className="text-xl sm:text-2xl" href="/">
           Bread Of Life Christian Church

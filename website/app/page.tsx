@@ -90,45 +90,49 @@ export default async function Home() {
     <div className="min-h-screen bg-primary-background text-primary-text">
       <main>
 
-        {/* SECTION 1: River video, meeting times */}
-        <section className="relative overflow-hidden">
-          <video
-            className="absolute h-full w-full object-cover"
-            autoPlay
-            loop
-            muted
-            playsInline
-            aria-hidden="true"
-          >
-            <source src="/church-hero-vid.mp4" type="video/mp4" />
-          </video>
-          <div className="relative mx-auto md:mx-[13vw] max-w-xl px-12 py-12 my-40 text-stone-800 space-y-6 rounded-3xl border border-white/60 bg-white/90 p-8 shadow-lg shadow-sky-100">
-            <h1 className="text-4xl font-bold md:text-5xl">
-              {heroTitle}
-            </h1>
-            <p className="text-lg">
-              {heroWelcomeMessage}
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="#times"
-                className="text-white font-medium px-5 py-3 rounded-md bg-primary-green transition hover:bg-hover-green"
+        {/* Hero */}
+        <section className="pt-18 pb-24 md:pt-28 md:pb-32 border-b border-stone-300">
+          <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-6 md:grid-cols-[2fr_3fr] md:gap-6 lg:grid-cols-[2fr_3fr] lg:gap-10">
+            <div className="text-center md:text-left">
+              <h1 className="text-2xl font-bold md:text-4xl">
+                {heroTitle}
+              </h1>
+              <p className="mt-8 text-lg">
+                {heroWelcomeMessage}
+              </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
+                <a
+                  href="#times"
+                  className="rounded-md text-white border border-slate-200 bg-primary-green px-5 py-3 font-medium transition hover:bg-hover-green hover:border-slate-300"
+                >
+                  Service Times
+                </a>
+                <a
+                  href="#contact"
+                  className="rounded-md border border-slate-300 bg-white px-5 py-3 font-medium transition hover:border-slate-400"
+                >
+                  Contact Us
+                </a>
+              </div>
+            </div>
+            <div className="relative aspect-video w-full overflow-hidden rounded-3xl">
+              <video
+                className="h-full w-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+                aria-hidden="true"
               >
-                Service Times
-              </a>
-              <a
-                href="#contact"
-                className="rounded-md border border-slate-300 bg-white px-5 py-3 font-medium transition hover:border-slate-400"
-              >
-                Contact Us
-              </a>
+                <source src="/church-hero-vid.mp4" type="video/mp4" />
+              </video>
             </div>
           </div>
         </section>
 
         {/* MISSION STATEMENT */}
-        <section id="mission" className="bg-primary-background py-30">
-          <div className="mx-auto w-full max-w-6xl px-6 py-24">
+        <section id="mission" className="bg-primary-background py-30 border-b border-stone-300">
+          <div className="mx-auto w-full max-w-6xl px-6 py-12">
             <h1 className="text-md font-medium uppercase tracking-[0.22em]">MISSION</h1>
             <div className="mt-4 grid gap-12 sm:grid-cols-2">
               <h2 className="text-3xl font-bold">{missionTitle}</h2>
