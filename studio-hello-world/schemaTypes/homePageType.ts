@@ -8,27 +8,25 @@ export const homePageType = defineType({
     defineField({
       name: 'heroTitle',
       title: 'Hero Title',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'heroWelcomeMessage',
       title: 'Hero Welcome Message',
-      type: 'text',
-      rows: 4,
+      type: 'internationalizedArrayText',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'missionTitle',
       title: 'Mission Title',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'missionDescription',
       title: 'Mission Description',
-      type: 'text',
-      rows: 6,
+      type: 'internationalizedArrayText',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -44,20 +42,19 @@ export const homePageType = defineType({
             defineField({
               name: 'title',
               title: 'Title',
-              type: 'string',
+              type: 'internationalizedArrayString',
               validation: (rule) => rule.required(),
             }),
             defineField({
               name: 'time',
               title: 'Time',
-              type: 'string',
+              type: 'internationalizedArrayString',
               validation: (rule) => rule.required(),
             }),
             defineField({
               name: 'description',
               title: 'Description',
-              type: 'text',
-              rows: 3,
+              type: 'internationalizedArrayText',
               validation: (rule) => rule.required(),
             }),
           ],
@@ -65,6 +62,23 @@ export const homePageType = defineType({
             select: {
               title: 'title',
               subtitle: 'time',
+            },
+            prepare({title, subtitle}) {
+              const titleValue =
+                Array.isArray(title) && title.length > 0
+                  ? title.find((item: {language?: string}) => item.language === 'en')?.value ??
+                    title[0]?.value
+                  : 'Untitled'
+              const timeValue =
+                Array.isArray(subtitle) && subtitle.length > 0
+                  ? subtitle.find((item: {language?: string}) => item.language === 'en')?.value ??
+                    subtitle[0]?.value
+                  : ''
+
+              return {
+                title: titleValue,
+                subtitle: timeValue,
+              }
             },
           },
         }),
@@ -74,26 +88,25 @@ export const homePageType = defineType({
     defineField({
       name: 'footerTitle',
       title: 'Footer Title',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'footerAddress',
       title: 'Footer Address',
-      type: 'text',
-      rows: 2,
+      type: 'internationalizedArrayText',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'footerPhone',
       title: 'Footer Phone',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'footerEmail',
       title: 'Footer Email',
-      type: 'string',
+      type: 'internationalizedArrayString',
       validation: (rule) => rule.required(),
     }),
   ],

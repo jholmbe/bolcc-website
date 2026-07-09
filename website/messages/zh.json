@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "title": "生命面包教会",
+    "description": "欢迎来到生命面包教会。与我们一同敬拜、祷告、团契。"
+  },
+  "nav": {
+    "churchName": "生命面包基督教会",
+    "about": "关于我们",
+    "events": "活动",
+    "give": "奉献",
+    "contact": "联系我们",
+    "resources": "资源",
+    "toggleMenu": "切换菜单",
+    "switchLanguage": "English"
+  },
+  "home": {
+    "serviceTimes": "聚会时间",
+    "contactUs": "联系我们",
+    "mission": "使命",
+    "defaults": {
+      "heroTitle": "什么能代表这座教会？",
+      "heroWelcomeMessage": "欢迎信息将显示在这里。",
+      "missionTitle": "我们的使命",
+      "missionDescription": "我们致力于传扬福音，建立门徒，在爱中服事社区。",
+      "footerTitle": "本周来访",
+      "footerAddress": "123 Hope Street, Springfield, ST 00000",
+      "footerPhone": "(555) 123-4567",
+      "footerEmail": "hello@gracecommunity.org",
+      "serviceTimes": [
+        {
+          "title": "主日崇拜",
+          "time": "上午 10:30 至 下午 12:30",
+          "description": "欢迎参加主日崇拜。"
+        },
+        {
+          "title": "青年查经",
+          "time": "周日 上午 11:30 至 下午 12:30",
+          "description": "主日崇拜期间的青年查经。"
+        },
+        {
+          "title": "查经聚会",
+          "time": "周四 晚上 8:30 至 9:30",
+          "description": "周中查经聚会。"
+        },
+        {
+          "title": "祷告会",
+          "time": "周五 晚上 8:00 至 10:00",
+          "description": "周五晚间祷告会。"
+        }
+      ]
+    }
+  },
+  "about": {
+    "eyebrow": "关于生命面包基督教会",
+    "location": "地址",
+    "mapTitle": "生命面包基督教会位置地图",
+    "motherChurch": "母会",
+    "visitMotherChurch": "生命河灵粮堂网站",
+    "defaults": {
+      "title": "关于我们",
+      "body": "生命面包社区教会是一个温暖的大家庭，人们在这里敬拜神，在信仰中成长，并以爱服侍他人。欢迎您与我们相聚。",
+      "address": "123 Hope Street, Springfield, ST 00000",
+      "mapEmbedUrl": "",
+      "motherChurchTitle": "矽谷生命河灵粮堂",
+      "motherChurchDescription": "生命面包基督教会与矽谷生命河灵粮堂（ROLCC）相连。作为我们的母会，生命河持续鼓励并支持我们的教会。",
+      "motherChurchUrl": "https://rolcc.net/rolcc2/"
+    }
+  },
+  "post": {
+    "backToPosts": "← 返回文章列表",
+    "published": "发布日期："
+  },
+  "events": {
+    "title": "活动"
+  }
+}

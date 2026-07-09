@@ -11,7 +11,7 @@
   --color-primary-green: var(--primary-green);
   --color-hover-green: var(--hover-green);
   --color-primary-text: var(--primary-text);
-  --font-sans: var(--font-noto-sans);
+  --font-sans: var(--font-noto-sans-sc), var(--font-noto-sans), sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {

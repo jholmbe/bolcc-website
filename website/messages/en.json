@@ -1,0 +1,76 @@
+{
+  "metadata": {
+    "title": "Bread of Life Church",
+    "description": "Welcome to Bread of Life Church. Join us for worship, prayer, and community."
+  },
+  "nav": {
+    "churchName": "Bread Of Life Christian Church",
+    "about": "About",
+    "events": "Events",
+    "give": "Give",
+    "contact": "Contact",
+    "resources": "Resources",
+    "toggleMenu": "Toggle menu",
+    "switchLanguage": "中文"
+  },
+  "home": {
+    "serviceTimes": "Service Times",
+    "contactUs": "Contact Us",
+    "mission": "MISSION",
+    "defaults": {
+      "heroTitle": "What is something that represents the church?",
+      "heroWelcomeMessage": "Welcome message here.",
+      "missionTitle": "Our mission",
+      "missionDescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "footerTitle": "Visit This Week",
+      "footerAddress": "123 Hope Street, Springfield, ST 00000",
+      "footerPhone": "(555) 123-4567",
+      "footerEmail": "hello@gracecommunity.org",
+      "serviceTimes": [
+        {
+          "title": "Sunday Worship",
+          "time": "10:30 AM to 12:30 PM",
+          "description": "Join us for Sunday worship."
+        },
+        {
+          "title": "Youth Bible Study",
+          "time": "Sunday 11:30 AM to 12:30 PM",
+          "description": "Youth Bible study during Sunday worship."
+        },
+        {
+          "title": "Bible Study",
+          "time": "Thursday 8:30 PM to 9:30 PM",
+          "description": "Midweek Bible study."
+        },
+        {
+          "title": "Prayer Meeting",
+          "time": "Friday 8:00 PM to 10:00 PM",
+          "description": "Friday evening prayer meeting."
+        }
+      ]
+    }
+  },
+  "about": {
+    "eyebrow": "About Bread of Life Christian Church",
+    "location": "Location",
+    "mapTitle": "Map showing Bread of Life Christian Church",
+    "motherChurch": "Our Mother Church",
+    "visitMotherChurch": "River of Life Website",
+    "defaults": {
+      "title": "About Us",
+      "body": "Bread of Life Community Church is a welcoming congregation where people gather to worship God, grow in faith, and serve others. We would love to meet you.",
+      "address": "123 Hope Street, Springfield, ST 00000",
+      "mapEmbedUrl": "",
+      "motherChurchTitle": "River of Life Christian Church",
+      "motherChurchDescription": "Bread of Life Christian Church is connected to River of Life Christian Church (ROLCC) in Silicon Valley — a mother church that continues to encourage and support our congregation.",
+      "motherChurchUrl": "https://rolcc.net/rolcc2/"
+    }
+  },
+  "post": {
+    "backToPosts": "← Back to posts",
+    "published": "Published:"
+  },
+  "events": {
+    "title": "Events"
+  }
+}
