@@ -71,6 +71,7 @@
     "published": "发布日期："
   },
   "events": {
-    "title": "活动"
+    "title": "近期活动",
+    "calendarTitle": "教会日历"
   }
 }

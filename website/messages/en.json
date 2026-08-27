@@ -71,6 +71,7 @@
     "published": "Published:"
   },
   "events": {
-    "title": "Events"
+    "title": "Upcoming Events",
+    "calendarTitle": "Church calendar"
   }
 }
