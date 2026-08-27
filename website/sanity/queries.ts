@@ -31,6 +31,15 @@ export const ABOUT_PAGE_QUERY = `*[_type == "aboutPage"][0]{
   motherChurchImage
 }`;
 
+export const GIVE_PAGE_QUERY = `*[_type == "givePage"][0]{
+  ${localizedString("eyebrow")},
+  ${localizedString("title")},
+  ${localizedString("body")},
+  ${localizedString("paymentTitle")},
+  ${localizedString("paymentInstructions")},
+  paymentQrCode
+}`;
+
 export const POSTS_QUERY = `*[
   _type == "post"
   && language == $locale

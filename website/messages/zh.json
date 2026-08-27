@@ -72,5 +72,17 @@
   },
   "events": {
     "title": "活动"
+  },
+  "give": {
+    "title": "奉献",
+    "eyebrow": "支持生命面包教会",
+    "defaults": {
+      "eyebrow": "支持生命面包教会",
+      "title": "奉献",
+      "description": "您的奉献帮助生命面包基督教会敬拜、服事邻舍，并分享耶稣所带来的盼望。感谢您用奉献与我们一同服事。",
+      "paymentTitle": "奉献方式",
+      "paymentInstructions": "扫描二维码，并按照提示通过 Zelle 安全地进行奉献。",
+      "paymentQrCodeAlt": "付款二维码"
+    }
   }
 }

@@ -63,7 +63,7 @@ export default function Header() {
   const navItems = [
     { name: t("about"), link: "/about" },
     { name: t("events"), link: "/events" },
-    { name: t("give"), link: "#give" },
+    { name: t("give"), link: "/give" },
     { name: t("contact"), link: "#contact" },
     { name: t("resources"), link: "#resources" },
   ];

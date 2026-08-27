@@ -72,5 +72,17 @@
   },
   "events": {
     "title": "Events"
-  }
+  },
+  "give": {
+    "title": "Give",
+    "eyebrow": "Support Bread of Life",
+    "defaults": {
+      "eyebrow": "Support Bread of Life",
+      "title": "Give",
+      "description": "Your generosity helps Bread of Life Christian Church worship, serve our neighbors, and share the hope of Jesus. Thank you for partnering with us through your giving.",
+      "paymentTitle": "Ways to Give",
+      "paymentInstructions": "Scan the QR code, and follow the instructions to make a secure donation through Zelle.",
+      "paymentQrCodeAlt": "Payment QR code"
+    }
+  }  
 }
