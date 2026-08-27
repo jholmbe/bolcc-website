@@ -71,7 +71,8 @@
     "published": "Published:"
   },
   "events": {
-    "title": "Events"
+    "title": "Upcoming Events",
+    "calendarTitle": "Church calendar"
   },
   "give": {
     "title": "Give",
@@ -84,5 +85,5 @@
       "paymentInstructions": "Scan the QR code, and follow the instructions to make a secure donation through Zelle.",
       "paymentQrCodeAlt": "Payment QR code"
     }
-  }  
+  }
 }
