@@ -1,8 +1,37 @@
+import type { SanityImageSource } from "@sanity/image-url";
+
+import { DEFAULT_LOCALE } from "@/i18n/config";
+
+/**
+ * Projects an `internationalizedArrayString` / `Text` field down to a single
+ * string: the value for the requested `$locale`, falling back to the default
+ * locale.
+ */
 const localizedString = (field: string) =>
   `"${field}": coalesce(
     ${field}[language == $locale][0].value,
-    ${field}[language == "en"][0].value
+    ${field}[language == "${DEFAULT_LOCALE}"][0].value
   )`;
+
+/* ------------------------------------------------------------------ home ---- */
+
+export type ServiceTime = {
+  title: string;
+  time: string;
+  description: string;
+};
+
+export type HomePageContent = {
+  heroTitle?: string;
+  heroWelcomeMessage?: string;
+  missionTitle?: string;
+  missionDescription?: string;
+  serviceTimes?: ServiceTime[];
+  footerTitle?: string;
+  footerAddress?: string;
+  footerPhone?: string;
+  footerEmail?: string;
+};
 
 export const HOME_PAGE_QUERY = `*[_type == "homePage"][0]{
   ${localizedString("heroTitle")},
@@ -20,6 +49,19 @@ export const HOME_PAGE_QUERY = `*[_type == "homePage"][0]{
   ${localizedString("footerEmail")}
 }`;
 
+/* ----------------------------------------------------------------- about ---- */
+
+export type AboutPageContent = {
+  title?: string;
+  body?: string;
+  address?: string;
+  mapEmbedUrl?: string;
+  motherChurchTitle?: string;
+  motherChurchDescription?: string;
+  motherChurchUrl?: string;
+  motherChurchImage?: SanityImageSource;
+};
+
 export const ABOUT_PAGE_QUERY = `*[_type == "aboutPage"][0]{
   ${localizedString("title")},
   ${localizedString("body")},
@@ -31,6 +73,17 @@ export const ABOUT_PAGE_QUERY = `*[_type == "aboutPage"][0]{
   motherChurchImage
 }`;
 
+/* ------------------------------------------------------------------ give ---- */
+
+export type GivePageContent = {
+  eyebrow?: string;
+  title?: string;
+  body?: string;
+  paymentTitle?: string;
+  paymentInstructions?: string;
+  paymentQrCode?: SanityImageSource;
+};
+
 export const GIVE_PAGE_QUERY = `*[_type == "givePage"][0]{
   ${localizedString("eyebrow")},
   ${localizedString("title")},
@@ -39,11 +92,3 @@ export const GIVE_PAGE_QUERY = `*[_type == "givePage"][0]{
   ${localizedString("paymentInstructions")},
   paymentQrCode
 }`;
-
-export const POSTS_QUERY = `*[
-  _type == "post"
-  && language == $locale
-  && defined(slug.current)
-]|order(publishedAt desc)[0...12]{_id, title, slug, publishedAt}`;
-
-export const POST_QUERY = `*[_type == "post" && slug.current == $slug && language == $locale][0]`;
