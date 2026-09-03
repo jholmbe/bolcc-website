@@ -92,3 +92,21 @@ export const GIVE_PAGE_QUERY = `*[_type == "givePage"][0]{
   ${localizedString("paymentInstructions")},
   paymentQrCode
 }`;
+
+/* -------------------------------------------------------------- contact ---- */
+
+export type ContactPageContent = {
+  title?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  responseDescription?: string;
+};
+
+export const CONTACT_PAGE_QUERY = `*[_type == "contactPage"][0]{
+  ${localizedString("title")},
+  ${localizedString("email")},
+  ${localizedString("phone")},
+  ${localizedString("address")},
+  ${localizedString("responseDescription")}
+}`;

@@ -31,5 +31,25 @@
   },
   "give": {
     "paymentQrCodeAlt": "付款二维码"
+  },
+  "contact": {
+    "emailLabel": "电子邮件",
+    "phoneLabel": "电话",
+    "addressLabel": "地址",
+    "nameLabel": "姓名",
+    "emailFieldLabel": "电子邮件",
+    "phoneFieldLabel": "电话号码",
+    "messageLabel": "留言",
+    "namePlaceholder": "您的姓名",
+    "emailPlaceholder": "you@example.com",
+    "phonePlaceholder": "选填",
+    "messagePlaceholder": "问题或简短留言（选填）",
+    "required": "必填",
+    "optional": "选填",
+    "submit": "发送留言",
+    "sending": "发送中…",
+    "success": "感谢您的留言，我们已收到，会尽快回复您。",
+    "error": "发送失败，请稍后再试，或直接发邮件给我们。",
+    "honeypotLabel": "请留空"
   }
 }

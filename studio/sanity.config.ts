@@ -6,10 +6,10 @@ import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {schemaTypes} from './schemaTypes'
 import {SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE} from './schemaTypes/languages'
 
-// The three page documents are singletons: exactly one of each should ever
-// exist. They get a fixed spot in the menu and lose the create/delete/duplicate
-// actions so editors can't accidentally make a second one.
-const SINGLETON_TYPES = ['homePage', 'aboutPage', 'givePage']
+// Page documents are singletons: exactly one of each should ever exist. They
+// get a fixed spot in the menu and lose the create/delete/duplicate actions so
+// editors can't accidentally make a second one.
+const SINGLETON_TYPES = ['homePage', 'aboutPage', 'givePage', 'contactPage']
 
 export default defineConfig({
   name: 'default',
@@ -27,6 +27,16 @@ export default defineConfig({
             S.documentTypeListItem('homePage').title('Home Page'),
             S.documentTypeListItem('aboutPage').title('About Page'),
             S.documentTypeListItem('givePage').title('Give Page'),
+            // Fixed documentId so the singleton opens even when empty (create is
+            // stripped from the global menu for SINGLETON_TYPES).
+            S.listItem()
+              .title('Contact Page')
+              .id('contactPage')
+              .child(
+                S.document()
+                  .schemaType('contactPage')
+                  .documentId('contactPage'),
+              ),
           ]),
     }),
     visionTool(),

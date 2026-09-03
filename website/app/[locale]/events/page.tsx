@@ -1,4 +1,4 @@
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
 function withCalendarParams(
   url: string,
@@ -9,14 +9,7 @@ function withCalendarParams(
   return `${url}${separator}${query}`;
 }
 
-export default async function EventsPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-
+export default async function EventsPage() {
   const t = await getTranslations("events");
   const calendarEmbedUrl = process.env.NEXT_PUBLIC_CALENDAR_EMBED_URL;
   const mobileCalendarUrl = calendarEmbedUrl

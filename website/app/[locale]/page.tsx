@@ -1,5 +1,6 @@
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
+import { Link } from "@/i18n/navigation";
 import { client } from "@/sanity/client";
 import { HOME_PAGE_QUERY, type HomePageContent } from "@/sanity/queries";
 import { SANITY_FETCH } from "@/sanity/utils";
@@ -10,7 +11,6 @@ export default async function Home({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  setRequestLocale(locale);
 
   const t = await getTranslations("home");
 
@@ -52,12 +52,12 @@ export default async function Home({
                 >
                   {t("serviceTimes")}
                 </a>
-                <a
-                  href="#contact"
+                <Link
+                  href="/contact"
                   className="rounded-md border border-slate-300 bg-white px-5 py-3 font-medium transition hover:border-slate-400 hover:bg-primary-green hover:text-white"
                 >
                   {t("contactUs")}
-                </a>
+                </Link>
               </div>
             </div>
             <div className="relative aspect-video w-full overflow-hidden rounded-3xl">

@@ -31,5 +31,25 @@
   },
   "give": {
     "paymentQrCodeAlt": "Payment QR code"
+  },
+  "contact": {
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "addressLabel": "Address",
+    "nameLabel": "Name",
+    "emailFieldLabel": "Email",
+    "phoneFieldLabel": "Phone number",
+    "messageLabel": "Message",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "you@example.com",
+    "phonePlaceholder": "Optional",
+    "messagePlaceholder": "Questions or a short message (optional)",
+    "required": "required",
+    "optional": "optional",
+    "submit": "Send message",
+    "sending": "Sending…",
+    "success": "Thanks — your message was sent. We’ll get back to you soon.",
+    "error": "Something went wrong. Please try again or email us directly.",
+    "honeypotLabel": "Leave blank"
   }
 }

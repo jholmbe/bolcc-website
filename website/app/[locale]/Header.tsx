@@ -64,7 +64,7 @@ export default function Header() {
     { name: t("about"), link: "/about" },
     { name: t("events"), link: "/events" },
     { name: t("give"), link: "/give" },
-    { name: t("contact"), link: "#contact" },
+    { name: t("contact"), link: "/contact" },
     { name: t("resources"), link: "#resources" },
   ];
 
