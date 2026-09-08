@@ -27,10 +27,6 @@ export type HomePageContent = {
   missionTitle?: string;
   missionDescription?: string;
   serviceTimes?: ServiceTime[];
-  footerTitle?: string;
-  footerAddress?: string;
-  footerPhone?: string;
-  footerEmail?: string;
 };
 
 export const HOME_PAGE_QUERY = `*[_type == "homePage"][0]{
@@ -42,7 +38,20 @@ export const HOME_PAGE_QUERY = `*[_type == "homePage"][0]{
     ${localizedString("title")},
     ${localizedString("time")},
     ${localizedString("description")}
-  },
+  }
+}`;
+
+/* ---------------------------------------------------------------- footer ---- */
+// Footer copy lives on the homePage singleton in Studio (site-wide chrome).
+
+export type FooterContent = {
+  footerTitle?: string;
+  footerAddress?: string;
+  footerPhone?: string;
+  footerEmail?: string;
+};
+
+export const FOOTER_QUERY = `*[_type == "homePage"][0]{
   ${localizedString("footerTitle")},
   ${localizedString("footerAddress")},
   ${localizedString("footerPhone")},

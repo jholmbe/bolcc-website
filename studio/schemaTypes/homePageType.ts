@@ -1,5 +1,7 @@
 import {defineField, defineType} from 'sanity'
 
+import {localizedPreviewValue} from './localizedPreview'
+
 export const homePageType = defineType({
   name: 'homePage',
   title: 'Home Page',
@@ -64,20 +66,9 @@ export const homePageType = defineType({
               subtitle: 'time',
             },
             prepare({title, subtitle}) {
-              const titleValue =
-                Array.isArray(title) && title.length > 0
-                  ? title.find((item: {language?: string}) => item.language === 'en')?.value ??
-                    title[0]?.value
-                  : 'Untitled'
-              const timeValue =
-                Array.isArray(subtitle) && subtitle.length > 0
-                  ? subtitle.find((item: {language?: string}) => item.language === 'en')?.value ??
-                    subtitle[0]?.value
-                  : ''
-
               return {
-                title: titleValue,
-                subtitle: timeValue,
+                title: localizedPreviewValue(title, 'Untitled'),
+                subtitle: localizedPreviewValue(subtitle),
               }
             },
           },
@@ -110,4 +101,11 @@ export const homePageType = defineType({
       validation: (rule) => rule.required(),
     }),
   ],
+  // Prefer the hero title over Sanity's default field dump for the document header.
+  preview: {
+    select: {title: 'heroTitle'},
+    prepare({title}) {
+      return {title: localizedPreviewValue(title, 'Home Page')}
+    },
+  },
 })

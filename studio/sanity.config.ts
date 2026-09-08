@@ -9,7 +9,18 @@ import {SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE} from './schemaTypes/languages'
 // Page documents are singletons: exactly one of each should ever exist. They
 // get a fixed spot in the menu and lose the create/delete/duplicate actions so
 // editors can't accidentally make a second one.
-const SINGLETON_TYPES = ['homePage', 'aboutPage', 'givePage', 'contactPage']
+//
+// documentId must match the live dataset doc. Contact was created with a
+// stable id; the others still use the UUIDs they were first saved under
+// (migrating those to `homePage` / `aboutPage` / `givePage` is optional).
+const SINGLETONS = [
+  {type: 'homePage', title: 'Home Page', id: '0b2c1574-4539-4578-9bad-dcba50d009e9'},
+  {type: 'aboutPage', title: 'About Page', id: '1b856018-659d-4519-86bf-ca983e409f4e'},
+  {type: 'givePage', title: 'Give Page', id: 'ddd962e1-38da-4daf-b402-f4ad888f0b1f'},
+  {type: 'contactPage', title: 'Contact Page', id: 'contactPage'},
+] as const
+
+const SINGLETON_TYPES: string[] = SINGLETONS.map((s) => s.type)
 
 export default defineConfig({
   name: 'default',
@@ -23,21 +34,14 @@ export default defineConfig({
       structure: (S) =>
         S.list()
           .title('Content')
-          .items([
-            S.documentTypeListItem('homePage').title('Home Page'),
-            S.documentTypeListItem('aboutPage').title('About Page'),
-            S.documentTypeListItem('givePage').title('Give Page'),
-            // Fixed documentId so the singleton opens even when empty (create is
-            // stripped from the global menu for SINGLETON_TYPES).
-            S.listItem()
-              .title('Contact Page')
-              .id('contactPage')
-              .child(
-                S.document()
-                  .schemaType('contactPage')
-                  .documentId('contactPage'),
-              ),
-          ]),
+          .items(
+            SINGLETONS.map(({type, title, id}) =>
+              S.listItem()
+                .title(title)
+                .id(type)
+                .child(S.document().schemaType(type).documentId(id).title(title)),
+            ),
+          ),
     }),
     visionTool(),
     internationalizedArray({

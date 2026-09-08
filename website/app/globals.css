@@ -5,12 +5,14 @@
   --primary-background: #ECE6DE;
   --primary-green: #498C8A;
   --hover-green: #8fc9c7;
+  --footer-background: #18181b; /* zinc-900 — keep in sync with Footer */
 }
 @theme inline {
   --color-primary-background: var(--primary-background);
   --color-primary-green: var(--primary-green);
   --color-hover-green: var(--hover-green);
   --color-primary-text: var(--primary-text);
+  --color-footer-background: var(--footer-background);
   --font-sans: var(--font-noto-sans-sc), var(--font-noto-sans), sans-serif;
 }
 
@@ -21,8 +23,25 @@
   }
 }
 
+/*
+  Overscroll canvas: use a solid background-color (required — the background
+  shorthand alone clears it and browsers fall back to white) plus a fixed
+  split gradient so top rubber-band is cream and bottom is footer-dark.
+*/
+html {
+  background-color: var(--primary-background);
+  background-image: linear-gradient(
+    to bottom,
+    var(--primary-background) 50%,
+    var(--footer-background) 50%
+  );
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
 body {
-  background: var(--primary-background);
+  background-color: transparent;
   color: var(--primary-text);
   font-family: var(--font-sans), sans-serif;
 }

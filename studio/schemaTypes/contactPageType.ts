@@ -1,5 +1,7 @@
 import {defineField, defineType} from 'sanity'
 
+import {localizedPreviewValue} from './localizedPreview'
+
 export const contactPageType = defineType({
   name: 'contactPage',
   title: 'Contact Page',
@@ -32,4 +34,12 @@ export const contactPageType = defineType({
       type: 'internationalizedArrayText',
     }),
   ],
+  // Without this, Studio stringifies the internationalizedArray `title`/`email`
+  // fields into the document header (e.g. "title: [{language:…, value:…}], …").
+  preview: {
+    select: {title: 'title'},
+    prepare({title}) {
+      return {title: localizedPreviewValue(title, 'Contact Page')}
+    },
+  },
 })

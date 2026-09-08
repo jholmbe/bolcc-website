@@ -25,12 +25,6 @@ export default async function Home({
       (card) => card?.title && card?.time && card?.description,
     ) ?? [];
 
-  const footerLines = [
-    content?.footerAddress,
-    content?.footerPhone,
-    content?.footerEmail,
-  ].filter((line): line is string => Boolean(line));
-
   return (
     <div className="min-h-screen bg-primary-background text-primary-text">
       <main>
@@ -121,22 +115,6 @@ export default async function Home({
           </section>
         )}
       </main>
-
-      <footer
-        id="visit"
-        className="border-t border-slate-200 bg-zinc-900 text-slate-100 pb-16"
-      >
-        <div id="contact" className="mx-auto w-full max-w-6xl px-6 py-12">
-          {content?.footerTitle && (
-            <h2 className="text-2xl font-semibold">{content.footerTitle}</h2>
-          )}
-          {footerLines.map((line) => (
-            <p key={line} className="mt-1 text-slate-300 first:mt-3">
-              {line}
-            </p>
-          ))}
-        </div>
-      </footer>
     </div>
   );
 }

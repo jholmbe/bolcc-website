@@ -1,5 +1,7 @@
 import {defineField, defineType} from 'sanity'
 
+import {localizedPreviewValue} from './localizedPreview'
+
 export const givePageType = defineType({
   name: 'givePage',
   title: 'Give Page',
@@ -39,4 +41,12 @@ export const givePageType = defineType({
       options: {hotspot: true},
     }),
   ],
+  // Without this, Studio stringifies the internationalizedArray `title` field
+  // into the document header.
+  preview: {
+    select: {title: 'title'},
+    prepare({title}) {
+      return {title: localizedPreviewValue(title, 'Give Page')}
+    },
+  },
 })

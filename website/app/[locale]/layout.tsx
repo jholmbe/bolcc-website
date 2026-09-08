@@ -5,8 +5,10 @@ import { hasLocale } from "next-intl";
 import { Noto_Sans, Noto_Sans_SC } from "next/font/google";
 import { notFound } from "next/navigation";
 
-import Header from "./Header";
+import Footer from "@/components/Footer";
 import { routing } from "@/i18n/routing";
+
+import Header from "./Header";
 
 import "../globals.css";
 
@@ -69,8 +71,11 @@ export default async function LocaleLayout({
         }
       >
         <NextIntlClientProvider messages={messages}>
-          <Header />
-          {children}
+          <div className="bg-primary-background">
+            <Header />
+            {children}
+          </div>
+          <Footer locale={locale} />
         </NextIntlClientProvider>
       </body>
     </html>
