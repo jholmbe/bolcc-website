@@ -25,6 +25,9 @@ export default async function GivePage({
   const paymentQrCodeUrl = content?.paymentQrCode
     ? urlFor(content.paymentQrCode)?.width(560).height(560).url()
     : null;
+  const tithelyFormUrl =
+    process.env.NEXT_PUBLIC_TITHELY_FORM_URL ??
+    "https://give.tithe.ly/?formId=d76beb28-8879-4032-89a5-e61c2cc30dba";
 
   return (
     <main className="min-h-screen">
@@ -43,6 +46,18 @@ export default async function GivePage({
           ))}
         </div>
       </div>
+
+      <section className="border-t border-stone-300">
+        <div className="container mx-auto max-w-3xl p-8 sm:py-24">
+          <iframe
+            src={tithelyFormUrl}
+            title={t("formTitle")}
+            className="h-250 w-full border-0"
+            loading="lazy"
+            allow="payment"
+          />
+        </div>
+      </section>
 
       {(content?.paymentTitle ||
         content?.paymentInstructions ||
