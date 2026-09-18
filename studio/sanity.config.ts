@@ -47,7 +47,7 @@ export default defineConfig({
     internationalizedArray({
       languages: [...SUPPORTED_LANGUAGES],
       defaultLanguages: [DEFAULT_LANGUAGE],
-      fieldTypes: ['string', 'text'],
+      fieldTypes: ['string', 'text', 'richText'],
     }),
   ],
 

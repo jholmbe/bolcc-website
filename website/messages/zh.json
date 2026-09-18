@@ -30,8 +30,11 @@
     "calendarTitle": "教会日历"
   },
   "give": {
-    "paymentQrCodeAlt": "付款二维码",
-    "formTitle": "在线奉献表单"
+    "qrCodeAlt": "付款二维码",
+    "methodsLabel": "选择奉献方式",
+    "tabOnline": "线上奉献",
+    "tabInPerson": "现场奉献",
+    "faqTitle": "常见问题"
   },
   "contact": {
     "emailLabel": "电子邮件",

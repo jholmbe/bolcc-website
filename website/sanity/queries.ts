@@ -1,3 +1,4 @@
+import type { PortableTextBlock } from "@portabletext/react";
 import type { SanityImageSource } from "@sanity/image-url";
 
 import { DEFAULT_LOCALE } from "@/i18n/config";
@@ -84,22 +85,52 @@ export const ABOUT_PAGE_QUERY = `*[_type == "aboutPage"][0]{
 
 /* ------------------------------------------------------------------ give ---- */
 
+export type GivingMethod = {
+  heading?: string;
+  body?: string;
+  linkUrl?: string;
+  linkLabel?: string;
+  image?: SanityImageSource;
+  imageAlt?: string;
+  /** Source dimensions, so QR codes can be rendered without being cropped. */
+  imageDimensions?: { width: number; height: number };
+};
+
+export type FaqItem = {
+  question?: string;
+  /** Portable Text blocks, localized by `localizedString` like any other field. */
+  answer?: PortableTextBlock[];
+};
+
 export type GivePageContent = {
   eyebrow?: string;
   title?: string;
   body?: string;
-  paymentTitle?: string;
-  paymentInstructions?: string;
-  paymentQrCode?: SanityImageSource;
+  onlineMethods?: GivingMethod[];
+  inPersonMethods?: GivingMethod[];
+  faqs?: FaqItem[];
 };
+
+const givingMethodProjection = `{
+  ${localizedString("heading")},
+  ${localizedString("body")},
+  linkUrl,
+  ${localizedString("linkLabel")},
+  image,
+  "imageDimensions": image.asset->metadata.dimensions{width, height},
+  ${localizedString("imageAlt")}
+}`;
 
 export const GIVE_PAGE_QUERY = `*[_type == "givePage"][0]{
   ${localizedString("eyebrow")},
   ${localizedString("title")},
   ${localizedString("body")},
-  ${localizedString("paymentTitle")},
-  ${localizedString("paymentInstructions")},
-  paymentQrCode
+  onlineMethods[]${givingMethodProjection},
+  inPersonMethods[]${givingMethodProjection},
+  faqs[]{
+    ${localizedString("question")},
+    ${localizedString("answer")}
+  }
 }`;
 
 /* -------------------------------------------------------------- contact ---- */

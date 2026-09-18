@@ -30,8 +30,11 @@
     "calendarTitle": "Church calendar"
   },
   "give": {
-    "paymentQrCodeAlt": "Payment QR code",
-    "formTitle": "Online giving form"
+    "qrCodeAlt": "Payment QR code",
+    "methodsLabel": "Choose a way to give",
+    "tabOnline": "Give online",
+    "tabInPerson": "Give in person",
+    "faqTitle": "Frequently asked questions"
   },
   "contact": {
     "emailLabel": "Email",
