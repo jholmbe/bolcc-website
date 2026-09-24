@@ -22,6 +22,9 @@ const SINGLETONS = [
 
 const SINGLETON_TYPES: string[] = SINGLETONS.map((s) => s.type)
 
+// LINE owns these documents. Keep them out of the Studio "Create" menu.
+const WEBHOOK_ONLY_TYPES = ['announcement']
+
 export default defineConfig({
   name: 'default',
   title: 'breadoflife',
@@ -34,14 +37,19 @@ export default defineConfig({
       structure: (S) =>
         S.list()
           .title('Content')
-          .items(
-            SINGLETONS.map(({type, title, id}) =>
+          .items([
+            ...SINGLETONS.map(({type, title, id}) =>
               S.listItem()
                 .title(title)
                 .id(type)
                 .child(S.document().schemaType(type).documentId(id).title(title)),
             ),
-          ),
+            S.divider(),
+            S.listItem()
+              .title('Announcements')
+              .schemaType('announcement')
+              .child(S.documentTypeList('announcement').title('Announcements')),
+          ]),
     }),
     visionTool(),
     internationalizedArray({
@@ -58,7 +66,11 @@ export default defineConfig({
   // Keep the global "＋ Create" menu from offering new singleton pages.
   document: {
     newDocumentOptions: (prev) =>
-      prev.filter((item) => !SINGLETON_TYPES.includes(item.templateId)),
+      prev.filter(
+        (item) =>
+          !SINGLETON_TYPES.includes(item.templateId) &&
+          !WEBHOOK_ONLY_TYPES.includes(item.templateId),
+      ),
     actions: (prev, {schemaType}) =>
       SINGLETON_TYPES.includes(schemaType)
         ? prev.filter(({action}) =>

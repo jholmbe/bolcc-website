@@ -29,6 +29,10 @@
     "title": "Upcoming Events",
     "calendarTitle": "Church calendar"
   },
+  "announcements": {
+    "title": "Announcements",
+    "imageAlt": "Announcement image"
+  },
   "give": {
     "qrCodeAlt": "Payment QR code",
     "methodsLabel": "Choose a way to give",

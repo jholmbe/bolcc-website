@@ -150,3 +150,30 @@ export const CONTACT_PAGE_QUERY = `*[_type == "contactPage"][0]{
   ${localizedString("address")},
   ${localizedString("responseDescription")}
 }`;
+
+/* --------------------------------------------------------- announcements ---- */
+
+export type AnnouncementImage = {
+  lineMessageId?: string;
+  image?: SanityImageSource;
+  imageDimensions?: { width: number; height: number };
+};
+
+export type Announcement = {
+  _id: string;
+  text?: string;
+  publishedAt?: string;
+  images?: AnnouncementImage[];
+};
+
+export const ANNOUNCEMENTS_QUERY = `*[_type == "announcement" && ((defined(text) && text != "") || count(images) > 0)]
+  | order(publishedAt desc)[0...5]{
+    _id,
+    text,
+    publishedAt,
+    images[]{
+      lineMessageId,
+      image,
+      "imageDimensions": image.asset->metadata.dimensions{width, height}
+    }
+  }`;

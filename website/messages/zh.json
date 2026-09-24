@@ -29,6 +29,10 @@
     "title": "近期活动",
     "calendarTitle": "教会日历"
   },
+  "announcements": {
+    "title": "教会公告",
+    "imageAlt": "公告图片"
+  },
   "give": {
     "qrCodeAlt": "付款二维码",
     "methodsLabel": "选择奉献方式",

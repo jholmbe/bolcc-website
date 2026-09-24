@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
+import AnnouncementsSection from "@/components/AnnouncementsSection";
 import { Link } from "@/i18n/navigation";
 import { client } from "@/sanity/client";
 import { HOME_PAGE_QUERY, type HomePageContent } from "@/sanity/queries";
@@ -68,6 +69,8 @@ export default async function Home({
             </div>
           </div>
         </section>
+
+        <AnnouncementsSection locale={locale} />
 
         {(content?.missionTitle || content?.missionDescription) && (
           <section
