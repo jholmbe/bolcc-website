@@ -31,6 +31,8 @@
   },
   "announcements": {
     "title": "Announcements",
+    "close": "Close",
+    "empty": "No announcements yet.",
     "imageAlt": "Announcement image"
   },
   "give": {

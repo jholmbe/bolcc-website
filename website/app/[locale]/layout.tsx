@@ -7,6 +7,9 @@ import { notFound } from "next/navigation";
 
 import Footer from "@/components/Footer";
 import { routing } from "@/i18n/routing";
+import { client } from "@/sanity/client";
+import { ANNOUNCEMENTS_QUERY, type Announcement } from "@/sanity/queries";
+import { SANITY_FETCH } from "@/sanity/utils";
 
 import Header from "./Header";
 
@@ -55,6 +58,12 @@ export default async function LocaleLayout({
   }
 
   const messages = await getMessages();
+  const announcements =
+    (await client.fetch<Announcement[]>(
+      ANNOUNCEMENTS_QUERY,
+      {},
+      SANITY_FETCH,
+    )) ?? [];
   const fontClass =
     locale === "zh"
       ? `${notoSans.variable} ${notoSansSC.variable}`
@@ -72,7 +81,7 @@ export default async function LocaleLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <div className="bg-primary-background">
-            <Header />
+            <Header announcements={announcements} />
             {children}
           </div>
           <Footer locale={locale} />

@@ -1,9 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
+import AnnouncementsModal, {
+  AnnouncementsTrigger,
+} from "@/components/AnnouncementsButton";
 import { Link, usePathname } from "@/i18n/navigation";
+import type { Announcement } from "@/sanity/queries";
 
 function HeaderTab({
   name,
@@ -54,11 +58,21 @@ function MobileNavItem({
   );
 }
 
-export default function Header() {
+export default function Header({
+  announcements,
+}: {
+  announcements: Announcement[];
+}) {
   const t = useTranslations("nav");
   const locale = useLocale();
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const announcementsDialogRef = useRef<HTMLDialogElement>(null);
+
+  const openAnnouncements = () => {
+    setMenuOpen(false);
+    announcementsDialogRef.current?.showModal();
+  };
 
   const navItems = [
     { name: t("about"), link: "/about" },
@@ -85,6 +99,17 @@ export default function Header() {
         </Link>
 
         <div className="flex items-center gap-4">
+          <AnnouncementsTrigger
+            className="max-md:hidden"
+            onClick={openAnnouncements}
+          />
+
+          <nav className="hidden md:flex gap-2">
+            {navItems.map((item) => (
+              <HeaderTab key={item.link} name={item.name} link={item.link} />
+            ))}
+          </nav>
+
           <Link
             className="hidden rounded-md bg-white border border-slate-300 px-3 py-1.5 text-sm font-medium transition hover:border-slate-400 hover:bg-primary-green hover:text-white md:inline-flex"
             href={pathname}
@@ -92,12 +117,6 @@ export default function Header() {
           >
             {t("switchLanguage")}
           </Link>
-
-          <nav className="hidden md:flex gap-2">
-            {navItems.map((item) => (
-              <HeaderTab key={item.link} name={item.name} link={item.link} />
-            ))}
-          </nav>
 
           <button
             type="button"
@@ -130,7 +149,7 @@ export default function Header() {
         aria-hidden={!menuOpen}
       >
         <nav className="flex flex-col pt-20 text-primary-text">
-          <div className="border-b border-stone-300 px-6 py-4">
+          <div className="flex items-center gap-3 border-b border-stone-300 px-6 py-4">
             <Link
               className="inline-flex rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium transition hover:border-slate-400 hover:bg-primary-green hover:text-white"
               href={pathname}
@@ -139,6 +158,7 @@ export default function Header() {
             >
               {t("switchLanguage")}
             </Link>
+            <AnnouncementsTrigger onClick={openAnnouncements} />
           </div>
           {navItems.map((item, index) => (
             <div key={item.link}>
@@ -154,6 +174,10 @@ export default function Header() {
           ))}
         </nav>
       </div>
+      <AnnouncementsModal
+        announcements={announcements}
+        dialogRef={announcementsDialogRef}
+      />
     </header>
   );
 }

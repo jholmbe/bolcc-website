@@ -167,7 +167,7 @@ export type Announcement = {
 };
 
 export const ANNOUNCEMENTS_QUERY = `*[_type == "announcement" && ((defined(text) && text != "") || count(images) > 0)]
-  | order(publishedAt desc)[0...5]{
+  | order(publishedAt desc)[0...50]{
     _id,
     text,
     publishedAt,

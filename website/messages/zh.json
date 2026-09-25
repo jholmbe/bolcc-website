@@ -31,6 +31,8 @@
   },
   "announcements": {
     "title": "教会公告",
+    "close": "关闭",
+    "empty": "目前还没有公告。",
     "imageAlt": "公告图片"
   },
   "give": {

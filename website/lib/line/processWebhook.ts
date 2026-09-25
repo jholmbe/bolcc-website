@@ -50,9 +50,9 @@ function isAllowedUser(userId: string | undefined): boolean {
 
 export function revalidateAnnouncements(): void {
   for (const locale of LOCALES) {
-    revalidatePath(`/${locale}`);
+    revalidatePath(`/${locale}`, "layout");
   }
-  revalidatePath("/");
+  revalidatePath("/", "layout");
 }
 
 export async function replyToLine(
