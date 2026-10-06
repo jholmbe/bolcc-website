@@ -8,6 +8,20 @@ import type { LineEvent, LineMessage } from "./types";
 const ATTACH_WINDOW_MS = 3 * 60 * 1000;
 const LINE_DATA_API = "https://api-data.line.me/v2/bot/message";
 const LINE_API = "https://api.line.me/v2/bot";
+const DELETE_COMMANDS = new Set([
+  "delete",
+  "/delete",
+  "unsend",
+  "/unsend",
+  "remove",
+  "/remove",
+  "删除",
+  "/删除",
+  "刪除",
+  "/刪除",
+  "撤回",
+  "收回",
+]);
 
 type StoredAnnouncement = {
   _id: string;
@@ -145,6 +159,31 @@ async function findRecentAnnouncement(
   );
 }
 
+function isDeleteCommand(text: string): boolean {
+  return DELETE_COMMANDS.has(text.trim().toLowerCase());
+}
+
+async function findLatestAnnouncement(
+  groupId: string,
+): Promise<StoredAnnouncement | null> {
+  return getWriteClient().fetch<StoredAnnouncement | null>(
+    `*[_type == "announcement" && groupId == $groupId]
+      | order(publishedAt desc)[0]{
+        _id,
+        lineMessageId,
+        textLineMessageId,
+        text,
+        "imageIds": images[].lineMessageId
+      }`,
+    { groupId },
+  );
+}
+
+async function deleteAnnouncementDocument(id: string): Promise<void> {
+  await getWriteClient().delete(id);
+  revalidateAnnouncements();
+}
+
 async function findAnnouncementByLineId(
   messageId: string,
 ): Promise<StoredAnnouncement | null> {
@@ -193,6 +232,11 @@ async function handleText(event: LineEvent, message: LineMessage): Promise<void>
   const userId = event.source?.userId;
   const text = message.text?.trim();
   if (!groupId || !text) {
+    return;
+  }
+
+  if (isDeleteCommand(text)) {
+    await handleDeleteCommand(event, message, groupId);
     return;
   }
 
@@ -287,6 +331,27 @@ async function handleEdit(event: LineEvent, message: LineMessage): Promise<void>
   await replyToLine(event.replyToken, "Updated on the website / 已更新到网站");
 }
 
+async function handleDeleteCommand(
+  event: LineEvent,
+  message: LineMessage,
+  groupId: string,
+): Promise<void> {
+  const existing = message.quotedMessageId
+    ? await findAnnouncementByLineId(message.quotedMessageId)
+    : await findLatestAnnouncement(groupId);
+
+  if (!existing) {
+    await replyToLine(
+      event.replyToken,
+      "No announcement to remove / 没有可删除的公告",
+    );
+    return;
+  }
+
+  await deleteAnnouncementDocument(existing._id);
+  await replyToLine(event.replyToken, "Removed from the website / 已从网站删除");
+}
+
 async function handleUnsend(messageId: string): Promise<void> {
   const existing = await findAnnouncementByLineId(messageId);
   if (!existing) {
@@ -302,8 +367,7 @@ async function handleUnsend(messageId: string): Promise<void> {
   const remainingText = isText ? "" : existing.text;
 
   if (!remainingText && remainingImages.length === 0) {
-    await getWriteClient().delete(existing._id);
-    revalidateAnnouncements();
+    await deleteAnnouncementDocument(existing._id);
     return;
   }
 

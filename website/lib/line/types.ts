@@ -13,6 +13,7 @@ export type LineMessage = {
   id: string;
   type: string;
   text?: string;
+  quotedMessageId?: string;
   contentProvider?: LineContentProvider;
 };
 
