@@ -7,11 +7,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Two **independent npm projects** that share no code. They connect only through the Sanity
 project (`iala0u3l`, dataset `production`).
 
-- `website/` — Next.js 16 App Router frontend (React 19, Turbopack, Tailwind v4, next-intl)
+- `website/` — Next.js 16 App Router frontend (React 19, Turbopack, Tailwind v4, next-intl),
+  deployed on Vercel from `main`
 - `studio/` — Sanity Studio v5 CMS admin (defines the schemas the website reads)
 
 Each has its own `package.json`, `node_modules`, `tsconfig.json`, and eslint config. There
-is no workspace tooling — run commands from inside the relevant folder.
+is no workspace tooling — run commands from inside the relevant folder. The root
+`README.md` is unedited create-next-app / Sanity boilerplate.
 
 ## Commands
 
@@ -23,7 +25,7 @@ npm run start      # serve the build
 npm run lint       # eslint (next/core-web-vitals + typescript)
 npx tsc --noEmit   # typecheck (no separate script)
 ```
-There is **no test suite**.
+There is **no test suite**. Verify changes with `tsc`, `lint`, and by loading the page.
 
 If `tsc` reports missing modules under `.next/types/…` after adding/removing routes, the
 generated type cache is stale: `rm -rf .next` and re-run.
@@ -39,21 +41,26 @@ Prettier is configured in `package.json` (no semicolons, single quotes, width 10
 
 The `sanity` CLI needs auth (`npx sanity login`) for any dataset or deploy operation.
 
-### Seeding the Give page (one-time, required)
-The live dataset has no `givePage` document, so the Give page renders empty. Import the
-seed (wording carried over from the old message-file defaults):
-```bash
-cd studio && npx sanity dataset import seed/givePage.ndjson --dataset production
-```
-See `website/docs/refactor/C17`.
+### Environment variables (`website/.env.local`, and Vercel for production)
+
+| Var | Used by |
+| --- | --- |
+| `NEXT_PUBLIC_CALENDAR_EMBED_URL` | Events page Google Calendar iframe |
+| `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` | `/api/contact` (returns 503 if unset) |
+| `SANITY_API_WRITE_TOKEN` | `sanity/writeClient.ts` — LINE webhook writes |
+| `LINE_CHANNEL_SECRET`, `LINE_CHANNEL_ACCESS_TOKEN` | LINE webhook signature check / API calls |
+| `LINE_GROUP_ID`, `LINE_ANNOUNCER_USER_ID` | Optional allow-lists; when unset, any group/user is accepted |
+
+Only the first three are in the local `.env.local`, so the LINE webhook only works on Vercel.
 
 ## Architecture
 
-### Content source of truth — do not mix the two systems
+### Content source of truth — do not mix the systems
 
 | Kind of text | Lives in | Editor |
 | --- | --- | --- |
-| Page copy (hero, mission, service times, about body, give text, footer, addresses) | **Sanity** — `homePage` / `aboutPage` / `givePage` singleton documents | Church staff, in the Studio |
+| Page copy (hero, mission, service times, about body, give text, contact info, footer, addresses) | **Sanity** — `homePage` / `aboutPage` / `givePage` / `contactPage` singletons | Church staff, in the Studio |
+| Announcements | **Sanity** `announcement` docs, written only by the LINE webhook | Church staff, by posting in a LINE group |
 | UI chrome (nav labels, button text, aria labels, iframe titles, SEO `metadata`) | **`website/messages/{en,zh}.json`** via next-intl | Developers |
 
 Pages render **directly** from Sanity: a missing field hides its element/section, there is
@@ -62,9 +69,13 @@ removing that duplication (a value declared in schema + query + type + fallback 
 files) was the point of the refactor documented in `website/docs/refactor/` (start with
 its `README.md`).
 
+The footer has no document of its own: `FOOTER_QUERY` reads footer fields off `homePage`.
+
 ### Sanity data flow (website side)
 
-- `website/sanity/client.ts` — `createClient` with project constants, `useCdn: false`.
+- `website/sanity/client.ts` — read client, `useCdn: false`.
+- `website/sanity/writeClient.ts` — token-authenticated `getWriteClient()`; server-only
+  (webhook use). Never import it from a client component.
 - `website/sanity/queries.ts` — GROQ query strings, each with its result **type colocated
   directly above it** (kept in sync with the schema by hand; Sanity Typegen was
   deliberately not adopted — see `docs/refactor/C16`). The `localizedString(field)` helper
@@ -75,17 +86,47 @@ its `README.md`).
 - Pages fetch as `client.fetch<XPageContent>(X_PAGE_QUERY, { locale }, SANITY_FETCH)` and
   render defensively (`content?.field`) since the result can be `null`.
 
-### Localized fields in the schema
+Adding a field means touching, by hand: the schema in `studio/schemaTypes/`, the GROQ
+projection and its type in `queries.ts`, and the rendering page. Deploy the Studio
+(`npm run deploy`) so editors see the new field.
 
-Page documents use `internationalizedArrayString` / `internationalizedArrayText`
-(`sanity-plugin-internationalized-array`), stored as `[{ _key: <lang>, value }]`. The
-`localizedString()` GROQ helper flattens them for the frontend.
+### Studio schema
 
-`homePage` / `aboutPage` / `givePage` are enforced as **singletons** in
-`studio/sanity.config.ts`: a custom desk `structure` lists exactly those three, and
-`document.newDocumentOptions` / `document.actions` strip create/duplicate/delete for those
-types. The website queries assume one document per type (`*[_type == "homePage"][0]`). See
-`docs/refactor/C15`.
+Page documents use `internationalizedArrayString` / `internationalizedArrayText` /
+`internationalizedArrayRichText` (`sanity-plugin-internationalized-array`), stored as
+`[{ _key: <lang>, value }]`. Rich text renders through `website/components/RichText.tsx`.
+
+The four page types are **singletons**, enforced in `studio/sanity.config.ts`: the
+`SINGLETONS` array pins each to a fixed `documentId` (UUIDs for home/about/give — they must
+match the live dataset docs, don't "clean them up" without migrating), and
+`document.newDocumentOptions` / `document.actions` strip create/duplicate/delete. The
+website queries assume one document per type (`*[_type == "homePage"][0]`). A new page
+type needs an entry in `SINGLETONS`. See `docs/refactor/C15`.
+
+`announcement` is listed in the Studio but is read-only and hidden from "Create" — LINE owns it.
+
+### LINE announcements pipeline
+
+`POST /api/line/webhook` (`website/app/api/line/webhook/route.ts`) verifies the
+`x-line-signature` HMAC, then `lib/line/processWebhook.ts` handles each event:
+
+- Text message → creates `announcement-<lineMessageId>` doc.
+- Image message → downloaded from LINE, uploaded as a Sanity asset, and attached to the
+  sender's announcement from the last 3 minutes (`ATTACH_WINDOW_MS`), else a new doc.
+- Edit / LINE "unsend" / a delete command (`delete`, `删除`, `撤回`, … in
+  `DELETE_COMMANDS`) → updates or deletes the matching doc.
+- After every write, `revalidateAnnouncements()` calls `revalidatePath` for each locale
+  layout so the change shows up without waiting for the 30s window.
+
+`ANNOUNCEMENTS_QUERY` is fetched in `app/[locale]/layout.tsx` and shown in a modal opened
+from `components/AnnouncementsButton.tsx` in the header.
+
+### Contact form
+
+`components/ContactForm.tsx` posts to `/api/contact`, which sends via Resend to the address
+in `contactPage.email` (Sanity), with `replyTo` set to the visitor. It has a honeypot field
+(`website`) and an **in-memory** per-IP rate limit (5/min) — per serverless instance, not
+global.
 
 ### i18n and routing
 
@@ -95,26 +136,35 @@ types. The website queries assume one document per type (`*[_type == "homePage"]
   `studio/schemaTypes/languages.ts` (separate app, no shared module).
 - `website/proxy.ts` is the next-intl middleware — Next 16 renamed `middleware.ts` →
   `proxy.ts`.
-- Root `website/app/layout.tsx` only returns `children`; the real `<html>`, fonts, and
-  `NextIntlClientProvider` are in `website/app/[locale]/layout.tsx`. The `zh` locale
-  additionally loads the Noto Sans SC font there.
-- `website/app/[locale]/Header.tsx` is the only client component; it reads nav labels from
-  the `nav` message namespace and toggles locale via `usePathname` + `<Link locale>`.
+- Root `website/app/layout.tsx` only returns `children`; the real `<html>`, fonts,
+  `NextIntlClientProvider`, and the announcements fetch are in
+  `website/app/[locale]/layout.tsx`. The `zh` locale additionally loads Noto Sans SC.
+- Everything is a server component except `Header`, `ContactForm`, `AnnouncementsButton`,
+  and `GivingOptions`. `Header` reads nav labels from the `nav` message namespace and
+  toggles locale via `usePathname` + `<Link locale>`.
 
 ### Events page
 
 `website/app/[locale]/events/page.tsx` does not use Sanity. It embeds a Google Calendar
-iframe from `NEXT_PUBLIC_CALENDAR_EMBED_URL` (set in `website/.env.local`), with an
-`AGENDA`-mode variant for mobile.
+iframe from `NEXT_PUBLIC_CALENDAR_EMBED_URL`, with an `AGENDA`-mode variant for mobile.
 
 ### Styling
 
 Tailwind v4 via `@import "tailwindcss"` in `website/app/globals.css`. Brand colors are CSS
-variables (`--primary-green`, `--primary-background`, `--primary-text`, `--hover-green`)
-re-exported through `@theme inline` as utilities (`bg-primary-green`, `text-primary-text`,
-…).
+variables (`--primary-green`, `--primary-background`, `--primary-text`, `--hover-green`,
+`--footer-background`) re-exported through `@theme inline` as utilities
+(`bg-primary-green`, `text-primary-text`, …). Use `stone-*` for neutral borders (not
+`slate-*`), and keep one `<h1>` per page. There is no dark mode.
 
 ### Remote images
 
 `next/image` only loads remote hosts listed in `website/next.config.ts` `images.remotePatterns`
 — currently `cdn.sanity.io`. Add a pattern before pointing `<Image>` at a new host.
+
+## Product context
+
+The site's audience and intent per page (newcomers for Home/About, donors for Give, etc.)
+are written up for content maintainers in the owner's Google Doc "BOLCC Website
+Documentation". Ask the user for it before making content or layout decisions that depend
+on audience. `studio/seed/givePage.ndjson` was the one-time initial import for the Give
+page (`docs/refactor/C17`); the live document now exists.
