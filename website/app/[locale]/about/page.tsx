@@ -28,7 +28,7 @@ export default async function AboutPage({
 
   return (
     <main className="min-h-screen">
-      <div className="container mx-auto max-w-3xl p-8 sm:py-24">
+      <div className="mx-auto w-full max-w-3xl px-6 py-8 sm:py-24">
         <p className="text-md font-medium uppercase tracking-[0.22em]">
           {t("eyebrow")}
         </p>
@@ -44,7 +44,7 @@ export default async function AboutPage({
 
       {(content?.address || content?.mapEmbedUrl) && (
         <section className="border-t border-stone-300">
-          <div className="container mx-auto max-w-3xl p-8 sm:py-24">
+          <div className="mx-auto w-full max-w-3xl px-6 py-8 sm:py-24">
             <h2 className="text-2xl font-bold">{t("location")}</h2>
             {content?.address && (
               <p className="mt-4 text-lg text-primary-text whitespace-pre-line">
@@ -55,7 +55,7 @@ export default async function AboutPage({
               <iframe
                 src={content.mapEmbedUrl}
                 title={t("mapTitle")}
-                className="mt-6 aspect-square w-full border-0 sm:aspect-auto sm:h-120"
+                className="mt-6 aspect-square w-full rounded-3xl border-0 sm:aspect-auto sm:h-120"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen
@@ -67,7 +67,7 @@ export default async function AboutPage({
 
       {(content?.motherChurchTitle || content?.motherChurchDescription) && (
         <section className="border-t border-stone-300">
-          <div className="container mx-auto max-w-6xl p-8 sm:py-24">
+          <div className="mx-auto w-full max-w-6xl px-6 py-8 sm:py-24">
             <div className="grid items-start gap-10 sm:grid-cols-[2fr_3fr] sm:gap-12">
               <div>
                 <p className="text-md font-medium uppercase tracking-[0.22em]">
@@ -88,7 +88,7 @@ export default async function AboutPage({
                     href={content.motherChurchUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-6 inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-5 py-3 font-medium transition hover:border-slate-400 hover:bg-primary-green hover:text-white"
+                    className="mt-6 inline-flex items-center gap-2 rounded-md border border-stone-300 bg-white px-5 py-3 font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white"
                   >
                     {t("visitMotherChurch")}
                     <svg
@@ -112,7 +112,7 @@ export default async function AboutPage({
                 <Image
                   src={motherChurchImageUrl}
                   alt={content?.motherChurchTitle ?? ""}
-                  className="aspect-3/2 w-full object-cover"
+                  className="aspect-3/2 w-full rounded-3xl object-cover"
                   width={1600}
                   height={1067}
                 />

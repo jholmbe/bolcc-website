@@ -17,8 +17,8 @@ export default async function EventsPage() {
     : undefined;
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-6xl px-6 pb-8">
-      <h1 className="text-3xl font-bold my-10">{t("title")}</h1>
+    <main className="mx-auto min-h-screen w-full max-w-6xl px-6 py-8 sm:py-24">
+      <h1 className="mb-8 text-4xl font-bold">{t("title")}</h1>
       {calendarEmbedUrl && (
         <>
           <iframe

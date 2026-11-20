@@ -40,7 +40,7 @@ function AnnouncementCard({
   const images = announcement.images?.filter((item) => item.image) ?? [];
 
   return (
-    <article className="rounded-lg border border-slate-200 bg-white p-5">
+    <article className="rounded-2xl border border-stone-300 bg-white p-5">
       {publishedAt && (
         <p className="text-sm font-medium uppercase tracking-[0.18em] text-primary-text/70">
           {publishedAt}
@@ -87,7 +87,7 @@ function AnnouncementCard({
 }
 
 const triggerClassName =
-  "inline-flex items-center justify-center rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium transition hover:border-slate-400";
+  "inline-flex items-center justify-center rounded-md border border-stone-300 px-3 py-1.5 text-sm font-medium transition hover:border-stone-400";
 
 function MegaphoneIcon() {
   return (
@@ -162,7 +162,7 @@ export default function AnnouncementsModal({
   return (
     <dialog
       ref={dialogRef}
-      className="m-auto w-[min(42rem,calc(100%-2rem))] max-h-[min(80vh,40rem)] rounded-2xl border border-stone-300 bg-primary-background p-0 font-normal text-primary-text shadow-xl backdrop:bg-black/40"
+      className="m-auto w-[min(42rem,calc(100%-2rem))] max-h-[min(80vh,40rem)] rounded-3xl border border-stone-300 bg-primary-background p-0 font-normal text-primary-text shadow-xl backdrop:bg-black/40"
     >
       <div className="flex max-h-[min(80vh,40rem)] flex-col">
         <div className="flex items-center justify-between gap-4 border-b border-stone-300 px-5 py-4">

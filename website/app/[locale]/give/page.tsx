@@ -45,7 +45,7 @@ function MethodCard({
               href={method.linkUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex rounded-md border border-slate-200 bg-primary-green px-5 py-3 font-medium text-white transition hover:border-slate-500 hover:bg-hover-green hover:text-slate-700"
+              className="inline-flex rounded-md border border-primary-green bg-primary-green px-5 py-3 font-medium text-white transition hover:border-hover-green hover:bg-hover-green hover:text-primary-text"
             >
               {method.linkLabel ?? method.linkUrl}
             </a>
@@ -60,7 +60,7 @@ function MethodCard({
             // Never scale past the source size: an upscaled QR code goes blurry
             // and phones stop recognising it.
             style={{ maxWidth: imageWidth }}
-            className="h-auto w-48 justify-self-center border border-stone-300 bg-white p-3"
+            className="h-auto w-48 justify-self-center rounded-xl border border-stone-300 bg-white p-3"
           />
         )}
       </div>
@@ -103,7 +103,7 @@ export default async function GivePage({
 
   return (
     <main className="min-h-screen">
-      <div className="container mx-auto max-w-3xl p-8 sm:py-24">
+      <div className="mx-auto w-full max-w-3xl px-6 py-8 sm:py-24">
         {content?.eyebrow && (
           <p className="text-md font-medium uppercase tracking-[0.22em]">
             {content.eyebrow}
@@ -128,7 +128,7 @@ export default async function GivePage({
 
       {faqs.length > 0 && (
         <section className="border-t border-stone-300">
-          <div className="container mx-auto max-w-3xl p-8 sm:py-24">
+          <div className="mx-auto w-full max-w-3xl px-6 py-8 sm:py-24">
             <h2 className="mb-8 text-3xl font-bold">{t("faqTitle")}</h2>
             <FaqAccordion items={faqs} />
           </div>

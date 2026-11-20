@@ -22,11 +22,11 @@ export default async function ContactPage({
 
   return (
     <main className="min-h-screen">
-      <div className="container mx-auto max-w-6xl p-8 sm:py-24">
+      <div className="mx-auto w-full max-w-6xl px-6 py-8 sm:py-24">
         <div className="grid gap-12 md:grid-cols-2 md:items-center md:gap-16">
           <section className="space-y-6 text-lg text-primary-text">
             {content?.title && (
-              <h2 className="text-3xl font-bold">{content.title}</h2>
+              <h1 className="text-4xl font-bold">{content.title}</h1>
             )}
             {content?.responseDescription && (
               <p className="md:mb-20 leading-relaxed">{content.responseDescription}</p>

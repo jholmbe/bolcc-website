@@ -22,7 +22,7 @@ export default async function Footer({ locale }: { locale: string }) {
   return (
     <footer
       id="visit"
-      className="border-t border-slate-200 bg-footer-background text-slate-100 pb-16"
+      className="border-t border-stone-300 bg-footer-background text-slate-100 pb-16"
     >
       <div id="contact" className="mx-auto w-full max-w-6xl px-6 py-12">
         {content?.footerTitle && (

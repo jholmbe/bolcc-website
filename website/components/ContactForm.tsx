@@ -44,7 +44,7 @@ export default function ContactForm() {
   }
 
   const inputClassName =
-    "mt-1 w-full rounded-2xl border border-stone-300 bg-white px-3 py-2.5 text-primary-text outline-none transition focus:border-primary-green";
+    "mt-1 w-full rounded-md border border-stone-300 bg-white px-3 py-2.5 text-primary-text outline-none transition focus:border-primary-green";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
@@ -123,7 +123,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === "sending"}
-        className="rounded-md border border-slate-200 bg-primary-green px-5 py-3 font-medium text-white transition hover:border-slate-500 hover:bg-hover-green hover:text-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
+        className="rounded-md border border-primary-green bg-primary-green px-5 py-3 font-medium text-white transition hover:border-hover-green hover:bg-hover-green hover:text-primary-text disabled:cursor-not-allowed disabled:opacity-60"
       >
         {status === "sending" ? t("sending") : t("submit")}
       </button>

@@ -111,7 +111,7 @@ export default function Header({
           </nav>
 
           <Link
-            className="hidden rounded-md bg-white border border-slate-300 px-3 py-1.5 text-sm font-medium transition hover:border-slate-400 hover:bg-primary-green hover:text-white md:inline-flex"
+            className="hidden rounded-md bg-white border border-stone-300 px-3 py-1.5 text-sm font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white md:inline-flex"
             href={pathname}
             locale={locale === "en" ? "zh" : "en"}
           >
@@ -151,7 +151,7 @@ export default function Header({
         <nav className="flex flex-col pt-20 text-primary-text">
           <div className="flex items-center gap-3 border-b border-stone-300 px-6 py-4">
             <Link
-              className="inline-flex rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium transition hover:border-slate-400 hover:bg-primary-green hover:text-white"
+              className="inline-flex rounded-md border border-stone-300 px-3 py-1.5 text-sm font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white"
               href={pathname}
               locale={locale === "en" ? "zh" : "en"}
               onClick={() => setMenuOpen(false)}

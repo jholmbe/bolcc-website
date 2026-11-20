@@ -16,12 +16,6 @@
   --font-sans: var(--font-noto-sans-sc), var(--font-noto-sans), sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000000;
-    --foreground: #ededed;
-  }
-}
 
 /*
   Overscroll canvas: use a solid background-color (required — the background
