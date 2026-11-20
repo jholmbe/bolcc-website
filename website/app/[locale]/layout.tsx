@@ -70,7 +70,7 @@ export default async function LocaleLayout({
       : notoSans.variable;
 
   return (
-    <html lang={locale}>
+    <html lang={locale === "zh" ? "zh-Hans" : locale}>
       <body
         className={`${fontClass} antialiased`}
         style={

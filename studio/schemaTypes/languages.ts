@@ -6,8 +6,9 @@
  * is a deliberate second copy — update both when adding/removing a language.
  */
 export const SUPPORTED_LANGUAGES = [
-  {id: 'en', title: 'English'},
   {id: 'zh', title: '中文'},
+  {id: 'en', title: 'English'},
 ] as const
 
-export const DEFAULT_LANGUAGE = 'en'
+/** Simplified Chinese is the church's primary language and the website's fallback. */
+export const DEFAULT_LANGUAGE = 'zh'

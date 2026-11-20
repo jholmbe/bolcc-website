@@ -4,7 +4,7 @@ import { useEffect, type RefObject } from "react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 
-import { DATE_LOCALE, type Locale } from "@/i18n/config";
+import { DATE_LOCALE, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { splitParagraphs } from "@/lib/text";
 import type { Announcement } from "@/sanity/queries";
 import { urlFor } from "@/sanity/utils";
@@ -14,7 +14,7 @@ function formatPublishedAt(value: string | undefined, locale: string): string | 
     return null;
   }
 
-  const dateLocale = DATE_LOCALE[(locale as Locale) ?? "en"] ?? "en-US";
+  const dateLocale = DATE_LOCALE[(locale as Locale) ?? DEFAULT_LOCALE] ?? DATE_LOCALE[DEFAULT_LOCALE];
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) {
     return null;

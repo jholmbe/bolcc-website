@@ -6,11 +6,16 @@
  * files AND the static `matcher` regex in `website/proxy.ts` (Next.js requires
  * that regex to be a literal, so it can't import this constant).
  */
-export const LOCALES = ["en", "zh"] as const;
+export const LOCALES = ["zh", "en"] as const;
 
 export type Locale = (typeof LOCALES)[number];
 
-export const DEFAULT_LOCALE: Locale = "en";
+/**
+ * Simplified Chinese is the church's primary language. It is the locale used
+ * when the visitor's browser language doesn't match one we support, and the
+ * fallback when a Sanity field has no text in the requested locale.
+ */
+export const DEFAULT_LOCALE: Locale = "zh";
 
 /** Locale tag passed to `Intl` / `toLocaleDateString`. */
 export const DATE_LOCALE: Record<Locale, string> = {

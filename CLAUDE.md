@@ -2,6 +2,11 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+**Audience:** this is the site of a Chinese Christian church. **Simplified Chinese (`zh`) is
+the primary language**; English (`en`) is secondary, for visitors and English-speaking members.
+Write and review Chinese copy as Simplified (not Traditional) unless the user says otherwise.
+The church already uses LINE, so it is the intended channel for announcements.
+
 ## Repository layout
 
 Two **independent npm projects** that share no code. They connect only through the Sanity
@@ -35,7 +40,8 @@ generated type cache is stale: `rm -rf .next` and re-run.
 npm run dev        # Studio on :3333
 npm run build      # sanity build
 npm run deploy     # deploy Studio to Sanity's hosting
-npm run lint       # @sanity/eslint-config-studio
+npx eslint .       # @sanity/eslint-config-studio (no lint script)
+npx tsc --noEmit   # typecheck
 ```
 Prettier is configured in `package.json` (no semicolons, single quotes, width 100).
 
@@ -103,6 +109,12 @@ match the live dataset docs, don't "clean them up" without migrating), and
 website queries assume one document per type (`*[_type == "homePage"][0]`). A new page
 type needs an entry in `SINGLETONS`. See `docs/refactor/C15`.
 
+Every `internationalizedArray*` field gets a "Chinese text is missing" **warning** (not an
+error) via `withChineseReminders` in `studio/schemaTypes/chineseReminder.ts`, applied to all
+types in `schemaTypes/index.ts` — new localized fields are covered automatically.
+`DEFAULT_LANGUAGE` in `studio/schemaTypes/languages.ts` is `zh` and must match the
+website's `DEFAULT_LOCALE`.
+
 `announcement` is listed in the Studio but is read-only and hidden from "Create" — LINE owns it.
 
 ### LINE announcements pipeline
@@ -130,15 +142,18 @@ global.
 
 ### i18n and routing
 
-- Locales: `en`, `zh`. `website/i18n/config.ts` (`LOCALES`, `DEFAULT_LOCALE`, `Locale`,
-  `DATE_LOCALE`) is the single source. Two places must be kept in sync **manually**:
+- Locales: `zh` (default), `en`. `website/i18n/config.ts` (`LOCALES`, `DEFAULT_LOCALE`,
+  `Locale`, `DATE_LOCALE`) is the single source. On a first visit to `/`, next-intl picks the
+  locale from the `NEXT_LOCALE` cookie, then the browser's `Accept-Language`, then `zh`.
+  `DEFAULT_LOCALE` is also the fallback when a Sanity field has no text in the requested
+  locale, so a missing English translation shows the Chinese text. Two places must be kept in sync **manually**:
   the `matcher` regex in `website/proxy.ts` (Next requires a static literal) and
   `studio/schemaTypes/languages.ts` (separate app, no shared module).
 - `website/proxy.ts` is the next-intl middleware — Next 16 renamed `middleware.ts` →
   `proxy.ts`.
 - Root `website/app/layout.tsx` only returns `children`; the real `<html>`, fonts,
   `NextIntlClientProvider`, and the announcements fetch are in
-  `website/app/[locale]/layout.tsx`. The `zh` locale additionally loads Noto Sans SC.
+  `website/app/[locale]/layout.tsx`. The `zh` locale loads Noto Sans SC and sets `<html lang="zh-Hans">`.
 - Everything is a server component except `Header`, `ContactForm`, `AnnouncementsButton`,
   and `GivingOptions`. `Header` reads nav labels from the `nav` message namespace and
   toggles locale via `usePathname` + `<Link locale>`.

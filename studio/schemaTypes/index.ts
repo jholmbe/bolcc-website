@@ -6,6 +6,7 @@ import {announcementType} from './announcementType'
 import {faqItemType} from './faqItemType'
 import {givingMethodType} from './givingMethodType'
 import {richTextType} from './richTextType'
+import {withChineseReminders} from './chineseReminder'
 
 export const schemaTypes = [
   homePageType,
@@ -16,4 +17,4 @@ export const schemaTypes = [
   givingMethodType,
   faqItemType,
   richTextType,
-]
+].map(withChineseReminders)

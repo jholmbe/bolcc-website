@@ -6,7 +6,7 @@ import { DEFAULT_LOCALE } from "@/i18n/config";
 /**
  * Projects an `internationalizedArrayString` / `Text` field down to a single
  * string: the value for the requested `$locale`, falling back to the default
- * locale.
+ * locale (Simplified Chinese) when that translation is missing.
  */
 const localizedString = (field: string) =>
   `"${field}": coalesce(
