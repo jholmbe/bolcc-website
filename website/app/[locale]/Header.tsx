@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -94,8 +95,23 @@ export default function Header({
   return (
     <header className="relative z-50 border-b border-stone-300 bg-primary-background">
       <div className="relative z-50 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 text-primary-text font-semibold tracking-tight">
-        <Link className="font-heading text-xl sm:text-2xl" href="/">
-          {t("churchName")}
+        <Link
+          className="flex items-center gap-3 font-heading text-xl sm:gap-5 sm:text-2xl"
+          href="/"
+        >
+          <Image
+            src="/logo.png"
+            alt=""
+            width={398}
+            height={480}
+            priority
+            // The globes make the bottom heavy; lift it so its visual weight centers.
+            // -my-2 lets it bleed into the header padding instead of making the bar taller.
+            className="-my-2 h-12 w-auto -translate-y-[5%] sm:h-16"
+          />
+          {/* Newsreader's ascent > descent, so its ink sits ~0.09em above the
+              line box's center; nudge it down to optically center on the logo. */}
+          <span className="translate-y-[0.09em]">{t("churchName")}</span>
         </Link>
 
         <div className="flex items-center gap-4">
@@ -111,7 +127,7 @@ export default function Header({
           </nav>
 
           <Link
-            className="hidden rounded-md bg-white border border-stone-300 px-3 py-1.5 text-base font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white md:inline-flex"
+            className="hidden whitespace-nowrap rounded-md bg-white border border-stone-300 px-3 py-1.5 text-base font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white md:inline-flex"
             href={pathname}
             locale={locale === "en" ? "zh" : "en"}
           >
