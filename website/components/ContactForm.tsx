@@ -60,7 +60,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="name" className="block text-sm font-medium">
+        <label htmlFor="name" className="block text-base font-medium">
           {t("nameLabel")}{" "}
           <span className="text-primary-text/60">({t("required")})</span>
         </label>
@@ -76,7 +76,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium">
+        <label htmlFor="email" className="block text-base font-medium">
           {t("emailFieldLabel")}{" "}
           <span className="text-primary-text/60">({t("required")})</span>
         </label>
@@ -92,7 +92,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium">
+        <label htmlFor="phone" className="block text-base font-medium">
           {t("phoneFieldLabel")}{" "}
           <span className="text-primary-text/60">({t("optional")})</span>
         </label>
@@ -107,7 +107,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium">
+        <label htmlFor="message" className="block text-base font-medium">
           {t("messageLabel")}{" "}
           <span className="text-primary-text/60">({t("optional")})</span>
         </label>
@@ -129,12 +129,12 @@ export default function ContactForm() {
       </button>
 
       {status === "success" && (
-        <p className="text-sm text-primary-text" role="status">
+        <p className="text-base text-primary-text" role="status">
           {t("success")}
         </p>
       )}
       {status === "error" && (
-        <p className="text-sm text-red-700" role="alert">
+        <p className="text-base text-red-700" role="alert">
           {t("error")}
         </p>
       )}

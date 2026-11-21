@@ -6,6 +6,22 @@
   --primary-green: #498C8A;
   --hover-green: #8fc9c7;
   --footer-background: #18181b; /* zinc-900 — keep in sync with Footer */
+  /*
+    Latin glyphs come from the Noto Sans web font (its variable is set on
+    <html>); Chinese falls through to the device's own font (PingFang on Apple,
+    YaHei on Windows, the phone's font on Android), which is what the
+    congregation reads every day. Noto Sans SC is only used if the visitor
+    already has it installed — it is not downloaded.
+  */
+  --font-body: var(--font-noto-sans), "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", sans-serif;
+  /*
+    Headings: Newsreader (serif) for Latin text, then the same Chinese
+    fallbacks as body text, so Chinese headings stay in the device's own font.
+  */
+  --font-heading-stack: var(--font-newsreader), "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC",
+    sans-serif;
 }
 @theme inline {
   --color-primary-background: var(--primary-background);
@@ -13,7 +29,19 @@
   --color-hover-green: var(--hover-green);
   --color-primary-text: var(--primary-text);
   --color-footer-background: var(--footer-background);
-  --font-sans: var(--font-noto-sans-sc), var(--font-noto-sans), sans-serif;
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading-stack);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading-stack);
+}
+
+/* Chinese needs more line spacing than Latin defaults to stay readable. */
+html:lang(zh) body {
+  line-height: 1.75;
 }
 
 
@@ -37,5 +65,5 @@ html {
 body {
   background-color: transparent;
   color: var(--primary-text);
-  font-family: var(--font-sans), sans-serif;
+  font-family: var(--font-body);
 }

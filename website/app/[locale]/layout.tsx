@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { hasLocale } from "next-intl";
-import { Noto_Sans, Noto_Sans_SC } from "next/font/google";
+import { Newsreader, Noto_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 
 import Footer from "@/components/Footer";
@@ -20,10 +20,9 @@ const notoSans = Noto_Sans({
   subsets: ["latin"],
 });
 
-const notoSansSC = Noto_Sans_SC({
-  variable: "--font-noto-sans-sc",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
 });
 
 export function generateStaticParams() {
@@ -64,21 +63,12 @@ export default async function LocaleLayout({
       {},
       SANITY_FETCH,
     )) ?? [];
-  const fontClass =
-    locale === "zh"
-      ? `${notoSans.variable} ${notoSansSC.variable}`
-      : notoSans.variable;
-
   return (
-    <html lang={locale === "zh" ? "zh-Hans" : locale}>
-      <body
-        className={`${fontClass} antialiased`}
-        style={
-          locale === "zh"
-            ? { fontFamily: "var(--font-noto-sans-sc), var(--font-noto-sans), sans-serif" }
-            : undefined
-        }
-      >
+    <html
+      lang={locale === "zh" ? "zh-Hans" : locale}
+      className={`${notoSans.variable} ${newsreader.variable}`}
+    >
+      <body className="antialiased">
         <NextIntlClientProvider messages={messages}>
           <div className="bg-primary-background">
             <Header announcements={announcements} />

@@ -42,7 +42,7 @@ function AnnouncementCard({
   return (
     <article className="rounded-2xl border border-stone-300 bg-white p-5">
       {publishedAt && (
-        <p className="text-sm font-medium uppercase tracking-[0.18em] text-primary-text/70">
+        <p className="text-base font-medium uppercase tracking-[0.18em] text-primary-text/70">
           {publishedAt}
         </p>
       )}
@@ -87,7 +87,7 @@ function AnnouncementCard({
 }
 
 const triggerClassName =
-  "inline-flex items-center justify-center rounded-md border border-stone-300 px-3 py-1.5 text-sm font-medium transition hover:border-stone-400";
+  "inline-flex items-center justify-center rounded-md border border-stone-300 px-3 py-1.5 text-base font-medium transition hover:border-stone-400";
 
 function MegaphoneIcon() {
   return (

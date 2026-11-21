@@ -35,7 +35,7 @@ export default async function ContactPage({
               <div className="space-y-6">
                 {content?.email && (
                   <div>
-                    <p className="text-sm font-medium uppercase tracking-[0.18em] text-primary-text/70">
+                    <p className="text-base font-medium uppercase tracking-[0.18em] text-primary-text/70">
                       {t("emailLabel")}
                     </p>
                     <a
@@ -48,7 +48,7 @@ export default async function ContactPage({
                 )}
                 {content?.phone && (
                   <div>
-                    <p className="text-sm font-medium uppercase tracking-[0.18em] text-primary-text/70">
+                    <p className="text-base font-medium uppercase tracking-[0.18em] text-primary-text/70">
                       {t("phoneLabel")}
                     </p>
                     <a
@@ -61,7 +61,7 @@ export default async function ContactPage({
                 )}
                 {content?.address && (
                   <div>
-                    <p className="text-sm font-medium uppercase tracking-[0.18em] text-primary-text/70">
+                    <p className="text-base font-medium uppercase tracking-[0.18em] text-primary-text/70">
                       {t("addressLabel")}
                     </p>
                     <p className="mt-1 whitespace-pre-line">{content.address}</p>

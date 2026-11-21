@@ -94,7 +94,7 @@ export default function Header({
   return (
     <header className="relative z-50 border-b border-stone-300 bg-primary-background">
       <div className="relative z-50 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 text-primary-text font-semibold tracking-tight">
-        <Link className="text-xl sm:text-2xl" href="/">
+        <Link className="font-heading text-xl sm:text-2xl" href="/">
           {t("churchName")}
         </Link>
 
@@ -111,7 +111,7 @@ export default function Header({
           </nav>
 
           <Link
-            className="hidden rounded-md bg-white border border-stone-300 px-3 py-1.5 text-sm font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white md:inline-flex"
+            className="hidden rounded-md bg-white border border-stone-300 px-3 py-1.5 text-base font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white md:inline-flex"
             href={pathname}
             locale={locale === "en" ? "zh" : "en"}
           >
@@ -151,7 +151,7 @@ export default function Header({
         <nav className="flex flex-col pt-20 text-primary-text">
           <div className="flex items-center gap-3 border-b border-stone-300 px-6 py-4">
             <Link
-              className="inline-flex rounded-md border border-stone-300 px-3 py-1.5 text-sm font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white"
+              className="inline-flex rounded-md border border-stone-300 px-3 py-1.5 text-base font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white"
               href={pathname}
               locale={locale === "en" ? "zh" : "en"}
               onClick={() => setMenuOpen(false)}
