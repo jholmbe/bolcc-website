@@ -73,8 +73,8 @@ export default async function LocaleLayout({
           <div className="bg-primary-background">
             <Header announcements={announcements} />
             {children}
+            <Footer locale={locale} />
           </div>
-          <Footer locale={locale} />
         </NextIntlClientProvider>
       </body>
     </html>

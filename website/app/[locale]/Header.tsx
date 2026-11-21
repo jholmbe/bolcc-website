@@ -83,6 +83,32 @@ export default function Header({
     { name: t("resources"), link: "#resources" },
   ];
 
+  // Below md the header slides away while scrolling down and returns on any
+  // scroll up, so it doesn't permanently cover ~11% of a phone screen.
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    const THRESHOLD = 8; // px of travel before changing state, to ignore jitter
+    let lastY = window.scrollY;
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const y = window.scrollY;
+        const delta = y - lastY;
+        if (y < 100) setHidden(false);
+        else if (delta > THRESHOLD) setHidden(true);
+        else if (delta < -THRESHOLD) setHidden(false);
+        if (Math.abs(delta) > THRESHOLD) lastY = y;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, []);
+
   useEffect(() => {
     if (!menuOpen) return;
     const previousOverflow = document.body.style.overflow;
@@ -93,107 +119,116 @@ export default function Header({
   }, [menuOpen]);
 
   return (
-    <header className="relative z-50 border-b border-stone-300 bg-primary-background">
-      <div className="relative z-50 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 text-primary-text font-semibold tracking-tight">
-        <Link
-          className="flex items-center gap-3 font-heading text-xl sm:gap-5 sm:text-2xl"
-          href="/"
-        >
-          <Image
-            src="/logo.png"
-            alt=""
-            width={398}
-            height={480}
-            priority
-            // The globes make the bottom heavy; lift it so its visual weight centers.
-            // -my-2 lets it bleed into the header padding instead of making the bar taller.
-            className="-my-2 h-12 w-auto -translate-y-[5%] sm:h-16"
-          />
-          {/* Newsreader's ascent > descent, so its ink sits ~0.09em above the
-              line box's center; nudge it down to optically center on the logo. */}
-          <span className="translate-y-[0.09em]">{t("churchName")}</span>
-        </Link>
-
-        <div className="flex items-center gap-4">
-          <AnnouncementsTrigger
-            className="max-md:hidden"
-            onClick={openAnnouncements}
-          />
-
-          <nav className="hidden md:flex gap-2">
-            {navItems.map((item) => (
-              <HeaderTab key={item.link} name={item.name} link={item.link} />
-            ))}
-          </nav>
-
+    <>
+      <header
+        className={`sticky top-0 z-50 border-b border-stone-300 bg-primary-background motion-safe:transition-transform motion-safe:duration-200 ${
+          hidden && !menuOpen ? "max-md:-translate-y-full" : ""
+        }`}
+        onFocusCapture={() => setHidden(false)}
+      >
+        <div className="relative z-50 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4 text-primary-text font-semibold tracking-tight">
           <Link
-            className="hidden whitespace-nowrap rounded-md bg-white border border-stone-300 px-3 py-1.5 text-base font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white md:inline-flex"
-            href={pathname}
-            locale={locale === "en" ? "zh" : "en"}
+            className="flex items-center gap-3 font-heading text-xl sm:gap-5 sm:text-2xl"
+            href="/"
           >
-            {t("switchLanguage")}
+            <Image
+              src="/logo.png"
+              alt=""
+              width={398}
+              height={480}
+              priority
+              // The globes make the bottom heavy; lift it so its visual weight centers.
+              // -my-2 lets it bleed into the header padding instead of making the bar taller.
+              className="-my-2 h-12 w-auto -translate-y-[5%] sm:h-16"
+            />
+            {/* Newsreader's ascent > descent, so its ink sits ~0.09em above the
+                line box's center; nudge it down to optically center on the logo. */}
+            <span className="translate-y-[0.09em] text-balance">{t("churchName")}</span>
           </Link>
 
-          <button
-            type="button"
-            aria-expanded={menuOpen}
-            aria-label={t("toggleMenu")}
-            className="md:hidden p-2 -mr-2 rounded-md transition hover:bg-black/5"
-            onClick={() => setMenuOpen((prev) => !prev)}
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden
-            >
-              {menuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
-        </div>
-      </div>
+          <div className="flex items-center gap-4">
+            <AnnouncementsTrigger
+              className="max-md:hidden"
+              onClick={openAnnouncements}
+            />
 
-      <div
-        className={`md:hidden fixed inset-0 z-40 bg-primary-background transition-opacity duration-200 ease-out ${
-          menuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
-        }`}
-        aria-hidden={!menuOpen}
-      >
-        <nav className="flex flex-col pt-20 text-primary-text">
-          <div className="flex items-center gap-3 border-b border-stone-300 px-6 py-4">
+            <nav className="hidden md:flex gap-2">
+              {navItems.map((item) => (
+                <HeaderTab key={item.link} name={item.name} link={item.link} />
+              ))}
+            </nav>
+
             <Link
-              className="inline-flex rounded-md border border-stone-300 px-3 py-1.5 text-base font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white"
+              className="hidden whitespace-nowrap rounded-md bg-white border border-stone-300 px-3 py-1.5 text-base font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white md:inline-flex"
               href={pathname}
               locale={locale === "en" ? "zh" : "en"}
-              onClick={() => setMenuOpen(false)}
             >
               {t("switchLanguage")}
             </Link>
-            <AnnouncementsTrigger onClick={openAnnouncements} />
+
+            <button
+              type="button"
+              aria-expanded={menuOpen}
+              aria-label={t("toggleMenu")}
+              className="md:hidden p-2 -mr-2 rounded-md transition hover:bg-black/5"
+              onClick={() => setMenuOpen((prev) => !prev)}
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden
+              >
+                {menuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
           </div>
-          {navItems.map((item, index) => (
-            <div key={item.link}>
-              <MobileNavItem
-                name={item.name}
-                link={item.link}
+        </div>
+        <AnnouncementsModal
+          announcements={announcements}
+          dialogRef={announcementsDialogRef}
+        />
+      </header>
+
+        {/* Outside <header>: the header's slide transform would otherwise become
+            this fixed overlay's containing block. */}
+        <div
+          className={`md:hidden fixed inset-0 z-40 bg-primary-background transition-opacity duration-200 ease-out ${
+            menuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
+          }`}
+          aria-hidden={!menuOpen}
+        >
+          <nav className="flex flex-col pt-20 text-primary-text">
+            <div className="flex items-center gap-3 border-b border-stone-300 px-6 py-4">
+              <Link
+                className="inline-flex rounded-md border border-stone-300 px-3 py-1.5 text-base font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white"
+                href={pathname}
+                locale={locale === "en" ? "zh" : "en"}
                 onClick={() => setMenuOpen(false)}
-              />
-              {index < navItems.length - 1 && (
-                <hr className="mx-6 border-t border-stone-300" />
-              )}
+              >
+                {t("switchLanguage")}
+              </Link>
+              <AnnouncementsTrigger onClick={openAnnouncements} />
             </div>
-          ))}
-        </nav>
-      </div>
-      <AnnouncementsModal
-        announcements={announcements}
-        dialogRef={announcementsDialogRef}
-      />
-    </header>
+            {navItems.map((item, index) => (
+              <div key={item.link}>
+                <MobileNavItem
+                  name={item.name}
+                  link={item.link}
+                  onClick={() => setMenuOpen(false)}
+                />
+                {index < navItems.length - 1 && (
+                  <hr className="mx-6 border-t border-stone-300" />
+                )}
+              </div>
+            ))}
+          </nav>
+        </div>
+    </>
   );
 }

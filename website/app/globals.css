@@ -62,6 +62,14 @@ html {
   background-size: 100% 100%;
 }
 
+/* Keep in-page anchors (#times, #visit, …) clear of the sticky header. Below
+   md it hides on scroll-down, so no offset is needed there. */
+@media (min-width: 48rem) {
+  html {
+    scroll-padding-top: 6rem;
+  }
+}
+
 body {
   background-color: transparent;
   color: var(--primary-text);
