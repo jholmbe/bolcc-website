@@ -4,6 +4,7 @@ import { useEffect, type RefObject } from "react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 
+import { HEADER_BUTTON_CLASS } from "@/components/headerButton";
 import { DATE_LOCALE, DEFAULT_LOCALE, type Locale } from "@/i18n/config";
 import { splitParagraphs } from "@/lib/text";
 import type { Announcement } from "@/sanity/queries";
@@ -86,9 +87,6 @@ function AnnouncementCard({
   );
 }
 
-const triggerClassName =
-  "inline-flex items-center justify-center rounded-md border border-stone-300 px-3 py-1.5 text-base font-medium transition hover:border-stone-400";
-
 function MegaphoneIcon() {
   return (
     <svg
@@ -125,11 +123,11 @@ export function AnnouncementsTrigger({
   return (
     <button
       type="button"
-      aria-label={t("title")}
       onClick={onClick}
-      className={`${triggerClassName}${className ? ` ${className}` : ""}`}
+      className={`${HEADER_BUTTON_CLASS}${className ? ` ${className}` : ""}`}
     >
       <MegaphoneIcon />
+      <span>{t("button")}</span>
     </button>
   );
 }
