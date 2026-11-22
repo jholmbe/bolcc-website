@@ -20,8 +20,6 @@
   },
   "about": {
     "eyebrow": "关于大華府生命河靈糧堂",
-    "location": "地址",
-    "mapTitle": "大華府生命河靈糧堂位置地图",
     "motherChurch": "母会",
     "visitMotherChurch": "生命河灵粮堂网站"
   },
@@ -46,7 +44,6 @@
   "contact": {
     "emailLabel": "电子邮件",
     "phoneLabel": "电话",
-    "addressLabel": "地址",
     "nameLabel": "姓名",
     "emailFieldLabel": "电子邮件",
     "phoneFieldLabel": "电话号码",

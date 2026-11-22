@@ -20,20 +20,6 @@ export const aboutPageType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'address',
-      title: 'Address',
-      type: 'internationalizedArrayText',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'mapEmbedUrl',
-      title: 'Map Embed URL',
-      description:
-        'Paste the src URL from Google Maps → Share → Embed a map (https://www.google.com/maps/embed?pb=...)',
-      type: 'url',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
       name: 'motherChurchTitle',
       title: 'Mother Church Title',
       type: 'internationalizedArrayString',

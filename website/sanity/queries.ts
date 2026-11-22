@@ -47,14 +47,12 @@ export const HOME_PAGE_QUERY = `*[_type == "homePage"][0]{
 
 export type FooterContent = {
   footerTitle?: string;
-  footerAddress?: string;
   footerPhone?: string;
   footerEmail?: string;
 };
 
 export const FOOTER_QUERY = `*[_type == "homePage"][0]{
   ${localizedString("footerTitle")},
-  ${localizedString("footerAddress")},
   ${localizedString("footerPhone")},
   ${localizedString("footerEmail")}
 }`;
@@ -64,8 +62,6 @@ export const FOOTER_QUERY = `*[_type == "homePage"][0]{
 export type AboutPageContent = {
   title?: string;
   body?: string;
-  address?: string;
-  mapEmbedUrl?: string;
   motherChurchTitle?: string;
   motherChurchDescription?: string;
   motherChurchUrl?: string;
@@ -75,8 +71,6 @@ export type AboutPageContent = {
 export const ABOUT_PAGE_QUERY = `*[_type == "aboutPage"][0]{
   ${localizedString("title")},
   ${localizedString("body")},
-  ${localizedString("address")},
-  mapEmbedUrl,
   ${localizedString("motherChurchTitle")},
   ${localizedString("motherChurchDescription")},
   motherChurchUrl,
@@ -139,7 +133,6 @@ export type ContactPageContent = {
   title?: string;
   email?: string;
   phone?: string;
-  address?: string;
   responseDescription?: string;
 };
 
@@ -147,7 +140,6 @@ export const CONTACT_PAGE_QUERY = `*[_type == "contactPage"][0]{
   ${localizedString("title")},
   ${localizedString("email")},
   ${localizedString("phone")},
-  ${localizedString("address")},
   ${localizedString("responseDescription")}
 }`;
 

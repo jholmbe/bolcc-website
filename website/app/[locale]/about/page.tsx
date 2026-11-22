@@ -42,29 +42,6 @@ export default async function AboutPage({
         </div>
       </div>
 
-      {(content?.address || content?.mapEmbedUrl) && (
-        <section className="border-t border-stone-300">
-          <div className="mx-auto w-full max-w-3xl px-6 py-8 sm:py-24">
-            <h2 className="text-2xl font-bold">{t("location")}</h2>
-            {content?.address && (
-              <p className="mt-4 text-lg text-primary-text whitespace-pre-line">
-                {content.address}
-              </p>
-            )}
-            {content?.mapEmbedUrl && (
-              <iframe
-                src={content.mapEmbedUrl}
-                title={t("mapTitle")}
-                className="mt-6 aspect-square w-full rounded-3xl border-0 sm:aspect-auto sm:h-120"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-              />
-            )}
-          </div>
-        </section>
-      )}
-
       {(content?.motherChurchTitle || content?.motherChurchDescription) && (
         <section className="border-t border-stone-300">
           <div className="mx-auto w-full max-w-6xl px-6 py-8 sm:py-24">

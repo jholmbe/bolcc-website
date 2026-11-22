@@ -20,8 +20,6 @@
   },
   "about": {
     "eyebrow": "About Bread of Life Christian Church",
-    "location": "Location",
-    "mapTitle": "Map showing Bread of Life Christian Church",
     "motherChurch": "Our Mother Church",
     "visitMotherChurch": "River of Life Website"
   },
@@ -46,7 +44,6 @@
   "contact": {
     "emailLabel": "Email",
     "phoneLabel": "Phone",
-    "addressLabel": "Address",
     "nameLabel": "Name",
     "emailFieldLabel": "Email",
     "phoneFieldLabel": "Phone number",
