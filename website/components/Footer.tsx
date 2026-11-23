@@ -10,7 +10,6 @@ export default async function Footer({ locale }: { locale: string }) {
   );
 
   const footerLines = [
-    content?.footerAddress,
     content?.footerPhone,
     content?.footerEmail,
   ].filter((line): line is string => Boolean(line));

@@ -19,9 +19,9 @@
     "mission": "使命"
   },
   "about": {
-    "eyebrow": "关于大華府生命河靈糧堂",
-    "location": "地址",
-    "mapTitle": "大華府生命河靈糧堂位置地图",
+    "values": "我们的核心价值",
+    "ministries": "我们的事工",
+    "history": "我们的历史",
     "motherChurch": "母会",
     "visitMotherChurch": "生命河灵粮堂网站"
   },
@@ -46,7 +46,6 @@
   "contact": {
     "emailLabel": "电子邮件",
     "phoneLabel": "电话",
-    "addressLabel": "地址",
     "nameLabel": "姓名",
     "emailFieldLabel": "电子邮件",
     "phoneFieldLabel": "电话号码",

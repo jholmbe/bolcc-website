@@ -23,11 +23,6 @@ export const contactPageType = defineType({
       type: 'internationalizedArrayString',
     }),
     defineField({
-      name: 'address',
-      title: 'Address',
-      type: 'internationalizedArrayText',
-    }),
-    defineField({
       name: 'responseDescription',
       title: 'Response Description',
       description: 'Who will respond and when visitors should expect a reply.',

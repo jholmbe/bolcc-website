@@ -65,7 +65,7 @@ Only the first three are in the local `.env.local`, so the LINE webhook only wor
 
 | Kind of text | Lives in | Editor |
 | --- | --- | --- |
-| Page copy (hero, mission, service times, about body, give text, contact info, footer, addresses) | **Sanity** — `homePage` / `aboutPage` / `givePage` / `contactPage` singletons | Church staff, in the Studio |
+| Page copy (hero, mission, service times, about body, give text, contact info, footer) | **Sanity** — `homePage` / `aboutPage` / `givePage` / `contactPage` singletons | Church staff, in the Studio |
 | Announcements | **Sanity** `announcement` docs, written only by the LINE webhook | Church staff, by posting in a LINE group |
 | UI chrome (nav labels, button text, aria labels, iframe titles, SEO `metadata`) | **`website/messages/{en,zh}.json`** via next-intl | Developers |
 
@@ -74,6 +74,9 @@ no code-level fallback. **Do not reintroduce `defaults.*` blocks in the message 
 removing that duplication (a value declared in schema + query + type + fallback + two JSON
 files) was the point of the refactor documented in `website/docs/refactor/` (start with
 its `README.md`).
+
+The church's street address is deliberately **not published anywhere** on the site (no
+address fields, no map embed). Don't add one back.
 
 The footer has no document of its own: `FOOTER_QUERY` reads footer fields off `homePage`.
 

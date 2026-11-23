@@ -83,12 +83,6 @@ export const homePageType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'footerAddress',
-      title: 'Footer Address',
-      type: 'internationalizedArrayText',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
       name: 'footerPhone',
       title: 'Footer Phone',
       type: 'internationalizedArrayString',

@@ -47,25 +47,39 @@ export const HOME_PAGE_QUERY = `*[_type == "homePage"][0]{
 
 export type FooterContent = {
   footerTitle?: string;
-  footerAddress?: string;
   footerPhone?: string;
   footerEmail?: string;
 };
 
 export const FOOTER_QUERY = `*[_type == "homePage"][0]{
   ${localizedString("footerTitle")},
-  ${localizedString("footerAddress")},
   ${localizedString("footerPhone")},
   ${localizedString("footerEmail")}
 }`;
 
 /* ----------------------------------------------------------------- about ---- */
 
+export type ValueItem = {
+  title?: string;
+  body?: PortableTextBlock[];
+  image?: SanityImageSource;
+};
+
+export type MinistryItem = {
+  title?: string;
+  description?: string;
+  /** Transparent PNG illustration, shown uncropped. */
+  image?: SanityImageSource;
+};
+
 export type AboutPageContent = {
   title?: string;
+  intro?: string;
+  introImage?: SanityImageSource;
+  values?: ValueItem[];
+  ministries?: MinistryItem[];
+  /** The history text (the field predates the "Our History" section). */
   body?: string;
-  address?: string;
-  mapEmbedUrl?: string;
   motherChurchTitle?: string;
   motherChurchDescription?: string;
   motherChurchUrl?: string;
@@ -74,9 +88,19 @@ export type AboutPageContent = {
 
 export const ABOUT_PAGE_QUERY = `*[_type == "aboutPage"][0]{
   ${localizedString("title")},
+  ${localizedString("intro")},
+  introImage,
+  values[]{
+    ${localizedString("title")},
+    ${localizedString("body")},
+    image
+  },
+  ministries[]{
+    ${localizedString("title")},
+    ${localizedString("description")},
+    image
+  },
   ${localizedString("body")},
-  ${localizedString("address")},
-  mapEmbedUrl,
   ${localizedString("motherChurchTitle")},
   ${localizedString("motherChurchDescription")},
   motherChurchUrl,
@@ -139,7 +163,6 @@ export type ContactPageContent = {
   title?: string;
   email?: string;
   phone?: string;
-  address?: string;
   responseDescription?: string;
 };
 
@@ -147,7 +170,6 @@ export const CONTACT_PAGE_QUERY = `*[_type == "contactPage"][0]{
   ${localizedString("title")},
   ${localizedString("email")},
   ${localizedString("phone")},
-  ${localizedString("address")},
   ${localizedString("responseDescription")}
 }`;
 
