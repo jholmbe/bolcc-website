@@ -60,7 +60,7 @@ export default function ValuesAccordion({ items }: { items: ValueItem[] }) {
                 <Image
                   src={imageUrl}
                   alt=""
-                  className="aspect-4/3 w-full rounded-3xl object-cover"
+                  className="aspect-4/3 w-full rounded-md object-cover"
                   width={1200}
                   height={900}
                 />

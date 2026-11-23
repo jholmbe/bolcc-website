@@ -61,7 +61,7 @@ export default async function AboutPage({
             <Image
               src={introImageUrl}
               alt=""
-              className="aspect-4/3 w-full rounded-3xl object-cover"
+              className="aspect-4/3 w-full rounded-md object-cover"
               width={1200}
               height={900}
               priority
@@ -126,64 +126,67 @@ export default async function AboutPage({
         </section>
       )}
 
-      {(historyParagraphs.length > 0 || hasMotherChurch) && (
+      {historyParagraphs.length > 0 && (
+        <section className="border-t border-stone-300">
+          <div className="mx-auto grid w-full max-w-6xl gap-6 px-6 py-8 sm:py-24 md:grid-cols-[1fr_2fr] md:gap-16">
+            <h2 className="text-3xl font-bold">{t("history")}</h2>
+            <div className="space-y-6 text-lg text-primary-text">
+              {historyParagraphs.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {hasMotherChurch && (
         <section className="border-t border-stone-300">
           <div className="mx-auto w-full max-w-6xl px-6 py-8 sm:py-24">
-            <div className="grid items-start gap-10 md:grid-cols-[3fr_2fr] md:gap-16">
+            <div className="grid items-start gap-10 sm:grid-cols-[2fr_3fr] sm:gap-12">
               <div>
-                <h2 className="mb-8 text-3xl font-bold">{t("history")}</h2>
-                <div className="space-y-6 text-lg text-primary-text">
-                  {historyParagraphs.map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
-                  ))}
-                </div>
-                {hasMotherChurch && (
-                  <div className="mt-10 border-t border-stone-300 pt-8">
-                    <p className="text-md font-medium uppercase tracking-[0.22em]">
-                      {t("motherChurch")}
-                    </p>
-                    {content?.motherChurchTitle && (
-                      <h3 className="mt-3 text-2xl font-bold">
-                        {content.motherChurchTitle}
-                      </h3>
-                    )}
-                    {content?.motherChurchDescription && (
-                      <p className="mt-4 text-lg text-primary-text">
-                        {content.motherChurchDescription}
-                      </p>
-                    )}
-                    {content?.motherChurchUrl && (
-                      <a
-                        href={content.motherChurchUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-6 inline-flex items-center gap-2 rounded-md border border-stone-300 bg-white px-5 py-3 font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white"
-                      >
-                        {t("visitMotherChurch")}
-                        <svg
-                          className="h-5 w-5"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          aria-hidden
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
-                          />
-                        </svg>
-                      </a>
-                    )}
-                  </div>
+                <p className="text-md font-medium uppercase tracking-[0.22em]">
+                  {t("motherChurch")}
+                </p>
+                {content?.motherChurchTitle && (
+                  <h2 className="mt-4 text-2xl font-bold">
+                    {content.motherChurchTitle}
+                  </h2>
+                )}
+                {content?.motherChurchDescription && (
+                  <p className="mt-4 text-lg text-primary-text">
+                    {content.motherChurchDescription}
+                  </p>
+                )}
+                {content?.motherChurchUrl && (
+                  <a
+                    href={content.motherChurchUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center gap-2 rounded-md border border-stone-300 bg-white px-5 py-3 font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white"
+                  >
+                    {t("visitMotherChurch")}
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                      />
+                    </svg>
+                  </a>
                 )}
               </div>
               {motherChurchImageUrl && (
                 <Image
                   src={motherChurchImageUrl}
                   alt={content?.motherChurchTitle ?? ""}
-                  className="aspect-3/2 w-full rounded-3xl object-cover md:sticky md:top-28"
+                  className="aspect-3/2 w-full rounded-md object-cover"
                   width={1600}
                   height={1067}
                 />
