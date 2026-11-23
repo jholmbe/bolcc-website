@@ -59,8 +59,26 @@ export const FOOTER_QUERY = `*[_type == "homePage"][0]{
 
 /* ----------------------------------------------------------------- about ---- */
 
+export type ValueItem = {
+  title?: string;
+  body?: PortableTextBlock[];
+  image?: SanityImageSource;
+};
+
+export type MinistryItem = {
+  title?: string;
+  description?: string;
+  /** Transparent PNG illustration, shown uncropped. */
+  image?: SanityImageSource;
+};
+
 export type AboutPageContent = {
   title?: string;
+  intro?: string;
+  introImage?: SanityImageSource;
+  values?: ValueItem[];
+  ministries?: MinistryItem[];
+  /** The history text (the field predates the "Our History" section). */
   body?: string;
   motherChurchTitle?: string;
   motherChurchDescription?: string;
@@ -70,6 +88,18 @@ export type AboutPageContent = {
 
 export const ABOUT_PAGE_QUERY = `*[_type == "aboutPage"][0]{
   ${localizedString("title")},
+  ${localizedString("intro")},
+  introImage,
+  values[]{
+    ${localizedString("title")},
+    ${localizedString("body")},
+    image
+  },
+  ministries[]{
+    ${localizedString("title")},
+    ${localizedString("description")},
+    image
+  },
   ${localizedString("body")},
   ${localizedString("motherChurchTitle")},
   ${localizedString("motherChurchDescription")},

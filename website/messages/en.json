@@ -19,7 +19,9 @@
     "mission": "MISSION"
   },
   "about": {
-    "eyebrow": "About Bread of Life Christian Church",
+    "values": "Our Values",
+    "ministries": "Our Ministries",
+    "history": "Our History",
     "motherChurch": "Our Mother Church",
     "visitMotherChurch": "River of Life Website"
   },
