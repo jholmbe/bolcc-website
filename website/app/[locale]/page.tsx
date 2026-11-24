@@ -2,7 +2,11 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import { client } from "@/sanity/client";
-import { HOME_PAGE_QUERY, type HomePageContent } from "@/sanity/queries";
+import {
+  HOME_PAGE_QUERY,
+  type HomePageContent,
+  type ServiceTime,
+} from "@/sanity/queries";
 import { SANITY_FETCH } from "@/sanity/utils";
 
 export default async function Home({
@@ -20,10 +24,11 @@ export default async function Home({
     SANITY_FETCH,
   );
 
-  const serviceTimes =
-    content?.serviceTimes?.filter(
-      (card) => card?.title && card?.time && card?.description,
-    ) ?? [];
+  const keep = (card: ServiceTime) => Boolean(card?.title && card?.time);
+  const serviceGroups = [
+    { heading: t("sunday"), cards: content?.sundayTimes?.filter(keep) ?? [] },
+    { heading: t("weekly"), cards: content?.weeklyTimes?.filter(keep) ?? [] },
+  ].filter((group) => group.cards.length > 0);
 
   return (
     <div className="min-h-screen bg-primary-background text-primary-text">
@@ -69,49 +74,34 @@ export default async function Home({
           </div>
         </section>
 
-        {(content?.missionTitle || content?.missionDescription) && (
-          <section
-            id="mission"
-            className="bg-primary-background py-30 border-b border-stone-300"
-          >
-            <div className="mx-auto w-full max-w-6xl px-6 py-12">
-              <p className="text-md font-medium uppercase tracking-[0.22em]">
-                {t("mission")}
-              </p>
-              <div className="mt-4 grid gap-12 sm:grid-cols-2">
-                {content?.missionTitle && (
-                  <h2 className="text-3xl font-bold">{content.missionTitle}</h2>
-                )}
-                {content?.missionDescription && (
-                  <p className="text-lg text-primary-text">
-                    {content.missionDescription}
-                  </p>
-                )}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {serviceTimes.length > 0 && (
+        {serviceGroups.length > 0 && (
           <section
             id="times"
-            className="bg-primary-background mx-auto w-full max-w-6xl px-6 py-30"
+            className="mx-auto grid w-full max-w-6xl gap-16 px-6 py-30 md:grid-cols-2 md:gap-12 lg:gap-16"
           >
-            <h2 className="text-3xl font-bold tracking-tight">
-              {t("serviceTimes")}
-            </h2>
-            <div className="mt-8 grid gap-5 sm:grid-cols-2">
-              {serviceTimes.map((card) => (
-                <article
-                  key={`${card.title}-${card.time}`}
-                  className="rounded-3xl border border-stone-300 bg-white p-6"
-                >
-                  <h3 className="text-lg font-semibold">{card.title}</h3>
-                  <p className="mt-2 text-primary-text/80">{card.time}</p>
-                  <p className="mt-2 text-primary-text">{card.description}</p>
-                </article>
-              ))}
-            </div>
+            {serviceGroups.map((group) => (
+              <div key={group.heading}>
+                <h2 className="mb-8 text-3xl font-bold sm:mb-12">
+                  {group.heading}
+                </h2>
+                <ul className="space-y-4 border-l-2 border-primary-green pl-6 sm:pl-8">
+                  {group.cards.map((card) => (
+                    <li
+                      key={`${card.title}-${card.time}`}
+                      className="rounded-md border border-stone-300 bg-[#FBF9F5] px-6 py-7 sm:min-h-36 sm:px-10"
+                    >
+                      <h3 className="text-xl font-bold">{card.title}</h3>
+                      <p className="mt-2 text-primary-text/70">{card.time}</p>
+                      {card.description && (
+                        <p className="mt-2 whitespace-pre-line">
+                          {card.description}
+                        </p>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </section>
         )}
       </main>

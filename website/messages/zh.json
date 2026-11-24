@@ -16,7 +16,8 @@
   "home": {
     "serviceTimes": "聚会时间",
     "contactUs": "联系我们",
-    "mission": "使命"
+    "sunday": "主日聚会",
+    "weekly": "平日聚会"
   },
   "about": {
     "values": "我们的核心价值",

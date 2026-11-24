@@ -1,6 +1,44 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 import {localizedPreviewValue} from './localizedPreview'
+
+/** One card in a home page service-times column. */
+const serviceTime = defineArrayMember({
+  name: 'serviceTime',
+  title: 'Service Time',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'title',
+      title: 'Title',
+      description: 'e.g. 成人查经班 / Adult Bible Study',
+      type: 'internationalizedArrayString',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'time',
+      title: 'Time',
+      description: 'e.g. 周四 晚上8:00 – 9:30 / Thursdays, 8:00PM – 9:30PM',
+      type: 'internationalizedArrayString',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'description',
+      title: 'Where',
+      description: 'Optional, e.g. 在 Zoom 线上聚会 / Meet on Zoom',
+      type: 'internationalizedArrayText',
+    }),
+  ],
+  preview: {
+    select: {title: 'title', subtitle: 'time'},
+    prepare({title, subtitle}) {
+      return {
+        title: localizedPreviewValue(title, 'Untitled'),
+        subtitle: localizedPreviewValue(subtitle),
+      }
+    },
+  },
+})
 
 export const homePageType = defineType({
   name: 'homePage',
@@ -20,61 +58,19 @@ export const homePageType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'missionTitle',
-      title: 'Mission Title',
-      type: 'internationalizedArrayString',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'missionDescription',
-      title: 'Mission Description',
-      type: 'internationalizedArrayText',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'serviceTimes',
-      title: 'Service Times',
+      name: 'sundayTimes',
+      title: 'Service Times: Sunday Gathering',
+      description: 'Cards in the "Sunday Gathering" column, in this order.',
       type: 'array',
-      of: [
-        defineField({
-          name: 'serviceTime',
-          title: 'Service Time',
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'title',
-              title: 'Title',
-              type: 'internationalizedArrayString',
-              validation: (rule) => rule.required(),
-            }),
-            defineField({
-              name: 'time',
-              title: 'Time',
-              type: 'internationalizedArrayString',
-              validation: (rule) => rule.required(),
-            }),
-            defineField({
-              name: 'description',
-              title: 'Description',
-              type: 'internationalizedArrayText',
-              validation: (rule) => rule.required(),
-            }),
-          ],
-          preview: {
-            select: {
-              title: 'title',
-              subtitle: 'time',
-            },
-            prepare({title, subtitle}) {
-              return {
-                title: localizedPreviewValue(title, 'Untitled'),
-                subtitle: localizedPreviewValue(subtitle),
-              }
-            },
-          },
-        }),
-      ],
+      of: [serviceTime],
       validation: (rule) => rule.min(1),
+    }),
+    defineField({
+      name: 'weeklyTimes',
+      title: 'Service Times: During the Week',
+      description: 'Cards in the "During the Week" column, in this order.',
+      type: 'array',
+      of: [serviceTime],
     }),
     defineField({
       name: 'footerTitle',

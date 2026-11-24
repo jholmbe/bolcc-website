@@ -17,29 +17,30 @@ const localizedString = (field: string) =>
 /* ------------------------------------------------------------------ home ---- */
 
 export type ServiceTime = {
-  title: string;
-  time: string;
-  description: string;
+  title?: string;
+  time?: string;
+  /** Where it meets; optional. */
+  description?: string;
 };
 
 export type HomePageContent = {
   heroTitle?: string;
   heroWelcomeMessage?: string;
-  missionTitle?: string;
-  missionDescription?: string;
-  serviceTimes?: ServiceTime[];
+  sundayTimes?: ServiceTime[];
+  weeklyTimes?: ServiceTime[];
 };
+
+const SERVICE_TIME_PROJECTION = `
+    ${localizedString("title")},
+    ${localizedString("time")},
+    ${localizedString("description")}
+`;
 
 export const HOME_PAGE_QUERY = `*[_type == "homePage"][0]{
   ${localizedString("heroTitle")},
   ${localizedString("heroWelcomeMessage")},
-  ${localizedString("missionTitle")},
-  ${localizedString("missionDescription")},
-  serviceTimes[]{
-    ${localizedString("title")},
-    ${localizedString("time")},
-    ${localizedString("description")}
-  }
+  sundayTimes[]{ ${SERVICE_TIME_PROJECTION} },
+  weeklyTimes[]{ ${SERVICE_TIME_PROJECTION} }
 }`;
 
 /* ---------------------------------------------------------------- footer ---- */

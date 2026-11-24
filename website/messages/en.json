@@ -16,7 +16,8 @@
   "home": {
     "serviceTimes": "Service Times",
     "contactUs": "Contact Us",
-    "mission": "MISSION"
+    "sunday": "Sunday Gathering",
+    "weekly": "During the Week"
   },
   "about": {
     "values": "Our Values",

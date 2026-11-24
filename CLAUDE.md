@@ -65,7 +65,7 @@ Only the first three are in the local `.env.local`, so the LINE webhook only wor
 
 | Kind of text | Lives in | Editor |
 | --- | --- | --- |
-| Page copy (hero, mission, service times, about body, give text, contact info, footer) | **Sanity** — `homePage` / `aboutPage` / `givePage` / `contactPage` singletons | Church staff, in the Studio |
+| Page copy (hero, service times, about body, give text, contact info, footer) | **Sanity** — `homePage` / `aboutPage` / `givePage` / `contactPage` singletons | Church staff, in the Studio |
 | Announcements | **Sanity** `announcement` docs, written only by the LINE webhook | Church staff, by posting in a LINE group |
 | UI chrome (nav labels, button text, aria labels, iframe titles, SEO `metadata`) | **`website/messages/{en,zh}.json`** via next-intl | Developers |
 
