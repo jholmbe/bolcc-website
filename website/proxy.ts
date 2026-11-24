@@ -5,7 +5,8 @@ import { routing } from "./i18n/routing";
 export default createMiddleware(routing);
 
 export const config = {
-  // Next.js requires this to be a static literal, so it can't import LOCALES.
-  // Keep the locale alternation in sync with `website/i18n/config.ts`.
-  matcher: ["/", "/(en|zh)/:path*"],
+  // Every page path, so unprefixed links like /about redirect to a locale
+  // instead of 500ing. Skips API routes, Next/Vercel internals, and files
+  // (anything with a dot: favicon.ico, logo.png, the hero video).
+  matcher: "/((?!api|_next|_vercel|.*\\..*).*)",
 };

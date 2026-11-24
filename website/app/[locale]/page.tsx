@@ -33,43 +33,62 @@ export default async function Home({
   return (
     <div className="min-h-screen bg-primary-background text-primary-text">
       <main>
-        <section className="pt-18 pb-24 md:pt-28 md:pb-32 border-b border-stone-300">
-          <div className="mx-auto grid w-full max-w-6xl items-center gap-10 px-6 md:grid-cols-[2fr_3fr] md:gap-6 lg:grid-cols-[2fr_3fr] lg:gap-10">
-            <div className="text-center md:text-left">
-              {content?.heroTitle && (
-                <h1 className="text-2xl font-bold md:text-4xl">
-                  {content.heroTitle}
-                </h1>
-              )}
-              {content?.heroWelcomeMessage && (
-                <p className="mt-8 text-lg">{content.heroWelcomeMessage}</p>
-              )}
-              <div className="mt-8 flex flex-wrap justify-center gap-3 md:justify-start">
-                <a
-                  href="#times"
-                  className="rounded-md border border-primary-green bg-primary-green px-5 py-3 font-medium text-white transition hover:border-hover-green hover:bg-hover-green hover:text-primary-text"
-                >
-                  {t("serviceTimes")}
-                </a>
-                <Link
-                  href="/contact"
-                  className="rounded-md border border-stone-300 bg-white px-5 py-3 font-medium transition hover:border-stone-400 hover:bg-primary-green hover:text-white"
-                >
-                  {t("contactUs")}
-                </Link>
+        {/*
+          Hero: the video fills the width (a gutter, 12px corners) and the
+          copy sits on top of it, aligned to the max-w-6xl content column.
+        */}
+        <section className="px-2 pt-2 pb-2 sm:px-8 sm:pt-4 sm:pb-8">
+          <div className="relative isolate flex min-h-[32rem] items-center overflow-hidden rounded-xl bg-stone-900 h-[calc(100svh-8.5rem)] max-h-[56rem]">
+            <video
+              className="absolute inset-0 -z-20 h-full w-full object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+              aria-hidden="true"
+            >
+              <source src="/church-hero-vid.mp4" type="video/mp4" />
+            </video>
+            {/* Darkens the video so white text stays readable (left side only from md up). */}
+            <div
+              className="absolute inset-0 -z-10 bg-black/35 md:bg-transparent md:bg-linear-to-r md:from-black/55 md:via-black/25 md:to-transparent"
+              aria-hidden
+            />
+            {/*
+              Cancels the section's gutter so this box spans the viewport like
+              the rest of the page. Its padding then puts the text where the
+              max-w-6xl column's text starts (50% - 36rem + 1.5rem), but never
+              closer than 1.5rem to the video's edge on narrower screens.
+            */}
+            <div className="-mx-2 w-[calc(100%+1rem)] sm:-mx-8 sm:w-[calc(100%+4rem)]">
+              <div className="px-[max(1.5rem,calc(50%-34.5rem))] py-16 text-white sm:px-[max(3.5rem,calc(50%-34.5rem))]">
+                <div className="max-w-2xl">
+                  {content?.heroTitle && (
+                    <h1 className="text-4xl font-bold leading-tight [text-shadow:0_1px_16px_rgb(0_0_0/0.5)] md:text-5xl">
+                      {content.heroTitle}
+                    </h1>
+                  )}
+                  {content?.heroWelcomeMessage && (
+                    <p className="mt-6 text-lg text-white/90 [text-shadow:0_1px_12px_rgb(0_0_0/0.5)]">
+                      {content.heroWelcomeMessage}
+                    </p>
+                  )}
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    <a
+                      href="#times"
+                      className="rounded-md border border-white bg-white px-5 py-3 font-medium text-primary-text transition hover:border-primary-green hover:bg-primary-green hover:text-white"
+                    >
+                      {t("serviceTimes")}
+                    </a>
+                    <Link
+                      href="/contact"
+                      className="rounded-md border border-white/60 px-5 py-3 font-medium text-white transition hover:border-white hover:bg-white/10"
+                    >
+                      {t("contactUs")}
+                    </Link>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="relative aspect-video w-full overflow-hidden rounded-3xl">
-              <video
-                className="h-full w-full object-cover"
-                autoPlay
-                loop
-                muted
-                playsInline
-                aria-hidden="true"
-              >
-                <source src="/church-hero-vid.mp4" type="video/mp4" />
-              </video>
             </div>
           </div>
         </section>

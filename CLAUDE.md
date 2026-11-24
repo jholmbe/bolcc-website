@@ -149,9 +149,10 @@ global.
   `Locale`, `DATE_LOCALE`) is the single source. On a first visit to `/`, next-intl picks the
   locale from the `NEXT_LOCALE` cookie, then the browser's `Accept-Language`, then `zh`.
   `DEFAULT_LOCALE` is also the fallback when a Sanity field has no text in the requested
-  locale, so a missing English translation shows the Chinese text. Two places must be kept in sync **manually**:
-  the `matcher` regex in `website/proxy.ts` (Next requires a static literal) and
-  `studio/schemaTypes/languages.ts` (separate app, no shared module).
+  locale, so a missing English translation shows the Chinese text. `studio/schemaTypes/languages.ts` must be kept
+  in sync **manually** (separate app, no shared module). The `website/proxy.ts` matcher
+  runs on every non-API, non-file path, so unprefixed links like `/about` redirect to a
+  locale; it lists no locales.
 - `website/proxy.ts` is the next-intl middleware — Next 16 renamed `middleware.ts` →
   `proxy.ts`.
 - Root `website/app/layout.tsx` only returns `children`; the real `<html>`, fonts,
